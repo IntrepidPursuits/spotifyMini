@@ -8,9 +8,21 @@
 
 import UIKit
 
+let TestSpotifyURI = "spotify:track:6gtUSdZjPovyVuOYAByZeU" // TODO: dont forget to remove this
+
 class ViewController: UIViewController, SPTAuthViewDelegate {
 
-    var session: SPTSession?
+    var session: SPTSession? {
+        didSet {
+            if self.session != nil {
+//                self.logInButton.hidden = true
+            }
+        }
+    }
+
+    lazy var player = SPTAudioStreamingController(clientId: SPTAuth.defaultInstance().clientID)
+
+    @IBOutlet weak var logInButton: UIButton!
 
     // MARK: View Life Cycle
 
@@ -19,6 +31,8 @@ class ViewController: UIViewController, SPTAuthViewDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(recieveSpotifyLogInNotification(_:)), name: AppReturnedFromSpotifyNotification, object: nil)
         self.checkForExistingSession()
     }
+
+
 
     // MARK: SPTSession
 
@@ -39,6 +53,27 @@ class ViewController: UIViewController, SPTAuthViewDelegate {
         spotifyLogInVC.modalTransitionStyle = .CrossDissolve
         self.presentViewController(spotifyLogInVC, animated: false, completion: nil)
     }
+
+    @IBAction func playTapped(sender: AnyObject) {
+        if let session = self.session {
+            self.player.loginWithSession(session, callback: { error in
+                if let error = error {
+                    print(error) // FIXME: throw application error
+                    return
+                }
+                let trackURI = NSURL(string: TestSpotifyURI)!
+                self.player.playURIs([trackURI], fromIndex: 0, callback: { error in
+                    if let error = error {
+                        print(error) // FIXME: throw application error
+                        return
+                    }
+                })
+            })
+        } else {
+            // TODO: present error alert
+        }
+    }
+
 
     // MARK: Notification Handling
 

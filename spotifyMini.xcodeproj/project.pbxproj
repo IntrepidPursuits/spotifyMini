@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6E12E7B294F7B323503292A9 /* Pods_spotifyMini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA853E5F0B76BCECCDF8948 /* Pods_spotifyMini.framework */; };
+		B81F7F9C1CDA99E30092F13D /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81F7F9B1CDA99E30092F13D /* TableViewController.swift */; };
 		B8A7E0CB1CDA4AB300E10028 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A7E0CA1CDA4AB300E10028 /* AppDelegate.swift */; };
 		B8A7E0D01CDA4AB300E10028 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8A7E0CE1CDA4AB300E10028 /* Main.storyboard */; };
 		B8A7E0D21CDA4AB300E10028 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8A7E0D11CDA4AB300E10028 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		448EB3A5B3A48CB8C155E91F /* Pods-spotifyMini.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spotifyMini.debug.xcconfig"; path = "Pods/Target Support Files/Pods-spotifyMini/Pods-spotifyMini.debug.xcconfig"; sourceTree = "<group>"; };
 		AAA853E5F0B76BCECCDF8948 /* Pods_spotifyMini.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spotifyMini.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B81F7F9B1CDA99E30092F13D /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		B8A7E0C71CDA4AB300E10028 /* spotifyMini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spotifyMini.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8A7E0CA1CDA4AB300E10028 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B8A7E0CF1CDA4AB300E10028 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 			children = (
 				B8A7E0CA1CDA4AB300E10028 /* AppDelegate.swift */,
 				B8A7E0E41CDA53CE00E10028 /* ViewController.swift */,
+				B81F7F9B1CDA99E30092F13D /* TableViewController.swift */,
 				B8A7E0CE1CDA4AB300E10028 /* Main.storyboard */,
 				B8A7E0D11CDA4AB300E10028 /* Assets.xcassets */,
 				B8A7E0D31CDA4AB300E10028 /* LaunchScreen.storyboard */,
@@ -218,6 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8A7E0E61CDA53CE00E10028 /* ViewController.swift in Sources */,
+				B81F7F9C1CDA99E30092F13D /* TableViewController.swift in Sources */,
 				B8A7E0CB1CDA4AB300E10028 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
