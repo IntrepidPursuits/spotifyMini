@@ -8,15 +8,42 @@
 
 import UIKit
 
+let SpotifySessionUserDefaultsKey = "SpotifySession"
+let AppReturnedFromSpotifyNotification = "AppReturnedFromSpotify"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    let clientID = "7106e0a1f4c94c6e9e3f1b209e11a3fb"
+    let callbackURL = NSURL(string: "intrepid-tom-spotify://callback")!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        self.setupSpotifyAuth()
         return true
+    }
+    
+    func setupSpotifyAuth() {
+        let auth = SPTAuth.defaultInstance()
+        auth.clientID = self.clientID
+        auth.redirectURL = self.callbackURL
+        auth.sessionUserDefaultsKey = SpotifySessionUserDefaultsKey
+        auth.requestedScopes = [SPTAuthStreamingScope]
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        if SPTAuth.defaultInstance().canHandleURL(url) {
+            SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { error, session in
+                if let error = error {
+                    // FIXME: throw application error
+                    NSNotificationCenter.defaultCenter().postNotificationName(AppReturnedFromSpotifyNotification, object: nil, userInfo: ["error":error])
+                    return
+                }
+                NSNotificationCenter.defaultCenter().postNotificationName(AppReturnedFromSpotifyNotification, object: nil, userInfo: ["session":session])
+            })
+            return true
+        }
+        return false
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -40,7 +67,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
-
