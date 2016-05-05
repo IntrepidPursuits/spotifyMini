@@ -4,7 +4,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -116,32 +115,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lobsterDog.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="1Wr-Ih-qXd">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t1I-cQ-MjZ" userLabel="Image Container View" customClass="ArtistHeaderView" customModule="spotifyMini" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="350" id="mvB-yR-Oq5"/>
+                                    <constraint firstAttribute="height" priority="999" constant="350" id="GxL-Ul-e6g"/>
                                 </constraints>
-                            </imageView>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fxF-Ic-QHp">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="atX-4X-yM6">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Albert Hammond Jr" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIg-7F-sYz">
-                                            <rect key="frame" x="219" y="229" width="163" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="DIg-7F-sYz" firstAttribute="centerX" secondItem="atX-4X-yM6" secondAttribute="centerX" id="sRl-gE-Wr9"/>
-                                        <constraint firstAttribute="bottom" secondItem="DIg-7F-sYz" secondAttribute="bottom" constant="100" id="yVB-zO-DlW"/>
-                                    </constraints>
-                                </view>
-                                <blurEffect style="dark"/>
-                            </visualEffectView>
+                            </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CUP-dL-0fH">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
@@ -171,32 +151,13 @@
                                                     <outlet property="delegate" destination="b6g-ob-pjf" id="oDB-ms-JoG"/>
                                                 </connections>
                                             </tableView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6C6-b4-HdE">
-                                                <rect key="frame" x="120" y="325" width="360" height="50"/>
-                                                <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="6v5-Ni-HQx"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                <state key="normal" title="SHUFFLE PLAY">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="25"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </button>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="2000" id="2ab-VO-Wvr"/>
                                             <constraint firstAttribute="trailing" secondItem="F73-Dh-z1z" secondAttribute="trailing" id="3Mp-IB-j8m"/>
                                             <constraint firstItem="F73-Dh-z1z" firstAttribute="top" secondItem="0oR-Ml-PM8" secondAttribute="top" id="BwE-bQ-BPM"/>
                                             <constraint firstItem="F73-Dh-z1z" firstAttribute="leading" secondItem="0oR-Ml-PM8" secondAttribute="leading" id="CaO-ef-IdQ"/>
-                                            <constraint firstItem="6C6-b4-HdE" firstAttribute="centerY" secondItem="woT-EF-gNh" secondAttribute="top" id="UPc-yA-piu"/>
-                                            <constraint firstItem="6C6-b4-HdE" firstAttribute="width" secondItem="0oR-Ml-PM8" secondAttribute="width" multiplier="0.6" id="Xhx-6Z-SMS"/>
                                             <constraint firstAttribute="trailing" secondItem="woT-EF-gNh" secondAttribute="trailing" id="ZnC-yU-o1M"/>
-                                            <constraint firstItem="6C6-b4-HdE" firstAttribute="centerX" secondItem="0oR-Ml-PM8" secondAttribute="centerX" id="f3c-zF-VjA"/>
                                             <constraint firstItem="woT-EF-gNh" firstAttribute="leading" secondItem="0oR-Ml-PM8" secondAttribute="leading" id="lWL-J6-ZRW"/>
                                             <constraint firstAttribute="bottom" secondItem="woT-EF-gNh" secondAttribute="bottom" constant="1000" id="mhZ-oK-nj7"/>
                                             <constraint firstItem="woT-EF-gNh" firstAttribute="top" secondItem="F73-Dh-z1z" secondAttribute="bottom" id="o8e-Ab-zDU"/>
@@ -218,29 +179,47 @@
                                     <outlet property="delegate" destination="b6g-ob-pjf" id="Ygn-9Z-K9c"/>
                                 </connections>
                             </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6C6-b4-HdE">
+                                <rect key="frame" x="120" y="325" width="360" height="50"/>
+                                <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="6v5-Ni-HQx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <state key="normal" title="SHUFFLE PLAY">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="25"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.074509803920000006" green="0.066666666669999999" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="fxF-Ic-QHp" firstAttribute="trailing" secondItem="1Wr-Ih-qXd" secondAttribute="trailing" id="0vf-5t-RMT"/>
-                            <constraint firstAttribute="trailing" secondItem="1Wr-Ih-qXd" secondAttribute="trailing" id="6aT-hb-eJv"/>
+                            <constraint firstItem="6C6-b4-HdE" firstAttribute="width" secondItem="aAr-qh-LFb" secondAttribute="width" multiplier="0.6" id="6M1-q2-AYG"/>
+                            <constraint firstItem="t1I-cQ-MjZ" firstAttribute="bottom" secondItem="6C6-b4-HdE" secondAttribute="centerY" priority="1" id="90J-ti-hDs"/>
                             <constraint firstItem="0oR-Ml-PM8" firstAttribute="width" secondItem="aAr-qh-LFb" secondAttribute="width" id="H4z-8V-bAU"/>
+                            <constraint firstItem="6C6-b4-HdE" firstAttribute="centerY" secondItem="woT-EF-gNh" secondAttribute="top" priority="750" id="KG4-py-7HI"/>
                             <constraint firstItem="WJO-zd-ItZ" firstAttribute="top" secondItem="CUP-dL-0fH" secondAttribute="bottom" id="MwP-bt-WdX"/>
                             <constraint firstAttribute="trailing" secondItem="CUP-dL-0fH" secondAttribute="trailing" id="NvY-Fw-pAl"/>
-                            <constraint firstItem="1Wr-Ih-qXd" firstAttribute="top" secondItem="aAr-qh-LFb" secondAttribute="topMargin" id="Tae-ZU-qUS"/>
+                            <constraint firstAttribute="trailing" secondItem="t1I-cQ-MjZ" secondAttribute="trailing" id="OdJ-SR-7qi"/>
+                            <constraint firstItem="6C6-b4-HdE" firstAttribute="top" relation="greaterThanOrEqual" secondItem="aAr-qh-LFb" secondAttribute="top" constant="60" id="Pwk-10-EOG"/>
                             <constraint firstItem="CUP-dL-0fH" firstAttribute="width" secondItem="aAr-qh-LFb" secondAttribute="width" id="VrC-IT-r8Z"/>
-                            <constraint firstItem="fxF-Ic-QHp" firstAttribute="bottom" secondItem="1Wr-Ih-qXd" secondAttribute="bottom" id="ao2-am-lk4"/>
+                            <constraint firstItem="t1I-cQ-MjZ" firstAttribute="leading" secondItem="aAr-qh-LFb" secondAttribute="leading" id="aPJ-VE-Umy"/>
                             <constraint firstItem="CUP-dL-0fH" firstAttribute="leading" secondItem="aAr-qh-LFb" secondAttribute="leading" id="b8c-MD-OhG"/>
-                            <constraint firstItem="1Wr-Ih-qXd" firstAttribute="leading" secondItem="aAr-qh-LFb" secondAttribute="leading" id="diy-wP-HN8"/>
-                            <constraint firstItem="fxF-Ic-QHp" firstAttribute="top" secondItem="1Wr-Ih-qXd" secondAttribute="top" id="q1p-d2-Yvc"/>
+                            <constraint firstItem="6C6-b4-HdE" firstAttribute="centerX" secondItem="aAr-qh-LFb" secondAttribute="centerX" id="n4b-ST-DiF"/>
                             <constraint firstItem="CUP-dL-0fH" firstAttribute="top" secondItem="aAr-qh-LFb" secondAttribute="top" id="r5N-FF-kFL"/>
-                            <constraint firstItem="fxF-Ic-QHp" firstAttribute="leading" secondItem="1Wr-Ih-qXd" secondAttribute="leading" id="wfV-ch-4hT"/>
+                            <constraint firstItem="t1I-cQ-MjZ" firstAttribute="top" secondItem="aAr-qh-LFb" secondAttribute="top" id="srO-ow-gkI"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="21I-mb-bzS">
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="NvR-lG-nQD"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="21I-mb-bzS"/>
                     <connections>
-                        <outlet property="headerImageViewHeight" destination="mvB-yR-Oq5" id="kN0-Gh-X2r"/>
+                        <outlet property="artistHeaderView" destination="t1I-cQ-MjZ" id="hDp-8d-oWM"/>
+                        <outlet property="artistViewBottomConstraint" destination="90J-ti-hDs" id="kb3-0q-XxA"/>
+                        <outlet property="headerImageViewHeightConstraint" destination="GxL-Ul-e6g" id="698-lg-igZ"/>
+                        <outlet property="scrollView" destination="CUP-dL-0fH" id="Wq9-O0-wTU"/>
                         <outlet property="shufflePlayButton" destination="6C6-b4-HdE" id="RrW-gU-guc"/>
                         <outlet property="tableView" destination="woT-EF-gNh" id="aAq-0i-ucr"/>
                     </connections>
@@ -286,7 +265,4 @@
             <point key="canvasLocation" x="676" y="497"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="lobsterDog.jpg" width="184" height="184"/>
-    </resources>
 </document>

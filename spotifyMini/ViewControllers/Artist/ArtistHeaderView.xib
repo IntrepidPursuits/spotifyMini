@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ArtistHeaderView" customModule="spotifyMini" customModuleProvider="target">
+            <connections>
+                <outlet property="blurContainerView" destination="Goh-BI-jHR" id="nmZ-TB-SU8"/>
+                <outlet property="blurImageView" destination="WiA-qF-OdJ" id="Lrq-5s-GUa"/>
+                <outlet property="headerImageView" destination="Nuk-XY-L8L" id="A1K-GM-QE7"/>
+                <outlet property="nameLabel" destination="G9Z-Ro-hqa" id="Z6x-Yc-VX7"/>
+                <outlet property="profileImageView" destination="AXS-SC-jEQ" id="aAS-uS-xHR"/>
+                <outlet property="view" destination="nXh-Fe-sP1" id="Pmn-6q-5gG"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="nXh-Fe-sP1" userLabel="Image Container View">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lobsterDog.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Nuk-XY-L8L">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Goh-BI-jHR">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lobsterDog.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="WiA-qF-OdJ">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
+                        </imageView>
+                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J9O-bO-Cd1">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
+                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="SBd-gI-7W8" userLabel="OtherViews">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lobsterDog.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="AXS-SC-jEQ">
+                                        <rect key="frame" x="240" y="81" width="120" height="120"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="AXS-SC-jEQ" secondAttribute="height" multiplier="1:1" id="P3k-1g-nc7"/>
+                                            <constraint firstAttribute="width" constant="120" id="vT5-Fw-3A1"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="60"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lobster Dog" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G9Z-Ro-hqa">
+                                        <rect key="frame" x="233" y="221" width="134" height="29"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="AXS-SC-jEQ" firstAttribute="bottom" secondItem="G9Z-Ro-hqa" secondAttribute="top" constant="-20" id="CDN-e6-yVR"/>
+                                    <constraint firstAttribute="bottom" secondItem="G9Z-Ro-hqa" secondAttribute="bottom" constant="100" id="CJe-UV-Ios"/>
+                                    <constraint firstItem="G9Z-Ro-hqa" firstAttribute="leading" secondItem="AXS-SC-jEQ" secondAttribute="trailing" id="UjH-C0-51i"/>
+                                    <constraint firstItem="AXS-SC-jEQ" firstAttribute="width" secondItem="SBd-gI-7W8" secondAttribute="width" multiplier="0.25" id="fvG-3W-ZUM"/>
+                                    <constraint firstItem="AXS-SC-jEQ" firstAttribute="centerX" secondItem="SBd-gI-7W8" secondAttribute="centerX" id="fxw-nE-wKB"/>
+                                    <constraint firstItem="G9Z-Ro-hqa" firstAttribute="centerX" secondItem="SBd-gI-7W8" secondAttribute="centerX" id="oFH-fY-5g1"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="fvG-3W-ZUM"/>
+                                        <exclude reference="UjH-C0-51i"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <blurEffect style="dark"/>
+                        </visualEffectView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="J9O-bO-Cd1" firstAttribute="bottom" secondItem="WiA-qF-OdJ" secondAttribute="bottom" id="8H9-yL-EEY"/>
+                        <constraint firstItem="J9O-bO-Cd1" firstAttribute="trailing" secondItem="WiA-qF-OdJ" secondAttribute="trailing" id="8aX-mU-Wjv"/>
+                        <constraint firstItem="J9O-bO-Cd1" firstAttribute="top" secondItem="WiA-qF-OdJ" secondAttribute="top" id="JcU-AH-n2V"/>
+                        <constraint firstItem="WiA-qF-OdJ" firstAttribute="leading" secondItem="Goh-BI-jHR" secondAttribute="leading" id="Mz6-dS-0vo"/>
+                        <constraint firstAttribute="bottom" secondItem="WiA-qF-OdJ" secondAttribute="bottom" id="Tyo-d1-fnw"/>
+                        <constraint firstItem="WiA-qF-OdJ" firstAttribute="top" secondItem="Goh-BI-jHR" secondAttribute="top" id="Zvc-Ji-gF3"/>
+                        <constraint firstItem="J9O-bO-Cd1" firstAttribute="leading" secondItem="WiA-qF-OdJ" secondAttribute="leading" id="dgh-WB-CSG"/>
+                        <constraint firstAttribute="trailing" secondItem="WiA-qF-OdJ" secondAttribute="trailing" id="h30-n5-4xL"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Nuk-XY-L8L" firstAttribute="leading" secondItem="nXh-Fe-sP1" secondAttribute="leading" id="L0O-6y-3ay"/>
+                <constraint firstAttribute="bottom" secondItem="Goh-BI-jHR" secondAttribute="bottom" id="LFz-Bm-MGR"/>
+                <constraint firstAttribute="bottom" secondItem="Nuk-XY-L8L" secondAttribute="bottom" priority="998" id="Nct-TP-yyZ"/>
+                <constraint firstAttribute="trailing" secondItem="Nuk-XY-L8L" secondAttribute="trailing" id="Onc-k7-bbA"/>
+                <constraint firstAttribute="trailing" secondItem="Goh-BI-jHR" secondAttribute="trailing" id="aSX-fe-UZb"/>
+                <constraint firstItem="Nuk-XY-L8L" firstAttribute="top" secondItem="nXh-Fe-sP1" secondAttribute="top" id="cCO-nA-rlE"/>
+                <constraint firstItem="Goh-BI-jHR" firstAttribute="top" secondItem="nXh-Fe-sP1" secondAttribute="top" id="qkE-sS-4Vb"/>
+                <constraint firstItem="Goh-BI-jHR" firstAttribute="leading" secondItem="nXh-Fe-sP1" secondAttribute="leading" id="rf3-30-IxQ"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="626" y="341"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="lobsterDog.jpg" width="184" height="184"/>
+    </resources>
+</document>
