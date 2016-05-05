@@ -15,6 +15,8 @@
 		B8A7E0D51CDA4AB300E10028 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8A7E0D31CDA4AB300E10028 /* LaunchScreen.storyboard */; };
 		B8A7E0E31CDA51AE00E10028 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8A7E0E21CDA51AE00E10028 /* Spotify.framework */; };
 		B8A7E0E61CDA53CE00E10028 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A7E0E41CDA53CE00E10028 /* ViewController.swift */; };
+		B8AC3ACB1CDB804400914FAE /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AC3ACA1CDB804400914FAE /* ArtistViewController.swift */; };
+		B8AC3ACD1CDB818300914FAE /* lobsterDog.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B8AC3ACC1CDB818300914FAE /* lobsterDog.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		B8A7E0DE1CDA504D00E10028 /* spotifyMini-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "spotifyMini-Bridging-Header.h"; sourceTree = "<group>"; };
 		B8A7E0E21CDA51AE00E10028 /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
 		B8A7E0E41CDA53CE00E10028 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B8AC3ACA1CDB804400914FAE /* ArtistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistViewController.swift; sourceTree = "<group>"; };
+		B8AC3ACC1CDB818300914FAE /* lobsterDog.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lobsterDog.jpg; sourceTree = "<group>"; };
 		F9AB29C1D96BE8C9BF741890 /* Pods-spotifyMini.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spotifyMini.release.xcconfig"; path = "Pods/Target Support Files/Pods-spotifyMini/Pods-spotifyMini.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,7 +83,9 @@
 				B8A7E0CA1CDA4AB300E10028 /* AppDelegate.swift */,
 				B8A7E0E41CDA53CE00E10028 /* ViewController.swift */,
 				B81F7F9B1CDA99E30092F13D /* TableViewController.swift */,
+				B8AC3ACA1CDB804400914FAE /* ArtistViewController.swift */,
 				B8A7E0CE1CDA4AB300E10028 /* Main.storyboard */,
+				B8AC3ACC1CDB818300914FAE /* lobsterDog.jpg */,
 				B8A7E0D11CDA4AB300E10028 /* Assets.xcassets */,
 				B8A7E0D31CDA4AB300E10028 /* LaunchScreen.storyboard */,
 				B8A7E0D61CDA4AB300E10028 /* Info.plist */,
@@ -161,6 +167,7 @@
 			files = (
 				B8A7E0D51CDA4AB300E10028 /* LaunchScreen.storyboard in Resources */,
 				B8A7E0D21CDA4AB300E10028 /* Assets.xcassets in Resources */,
+				B8AC3ACD1CDB818300914FAE /* lobsterDog.jpg in Resources */,
 				B8A7E0D01CDA4AB300E10028 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -223,6 +230,7 @@
 				B8A7E0E61CDA53CE00E10028 /* ViewController.swift in Sources */,
 				B81F7F9C1CDA99E30092F13D /* TableViewController.swift in Sources */,
 				B8A7E0CB1CDA4AB300E10028 /* AppDelegate.swift in Sources */,
+				B8AC3ACB1CDB804400914FAE /* ArtistViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
