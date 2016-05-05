@@ -1,4 +1,25 @@
 PODS:
+  - FontAwesomeKit (2.2.1):
+    - FontAwesomeKit/Core (= 2.2.1)
+    - FontAwesomeKit/FontAwesome (= 2.2.1)
+    - FontAwesomeKit/FoundationIcons (= 2.2.1)
+    - FontAwesomeKit/IonIcons (= 2.2.1)
+    - FontAwesomeKit/Material (= 2.2.1)
+    - FontAwesomeKit/Octicons (= 2.2.1)
+    - FontAwesomeKit/Zocial (= 2.2.1)
+  - FontAwesomeKit/Core (2.2.1)
+  - FontAwesomeKit/FontAwesome (2.2.1):
+    - FontAwesomeKit/Core
+  - FontAwesomeKit/FoundationIcons (2.2.1):
+    - FontAwesomeKit/Core
+  - FontAwesomeKit/IonIcons (2.2.1):
+    - FontAwesomeKit/Core
+  - FontAwesomeKit/Material (2.2.1):
+    - FontAwesomeKit/Core
+  - FontAwesomeKit/Octicons (2.2.1):
+    - FontAwesomeKit/Core
+  - FontAwesomeKit/Zocial (2.2.1):
+    - FontAwesomeKit/Core
   - Intrepid (0.3.1):
     - Intrepid/Core (= 0.3.1)
   - Intrepid/Core (0.3.1):
@@ -6,9 +27,21 @@ PODS:
   - IP-UIKit-Wisdom (0.0.9)
 
 DEPENDENCIES:
+  - FontAwesomeKit (from `git@github.com:PrideChung/FontAwesomeKit.git`, branch `master`)
   - Intrepid
 
+EXTERNAL SOURCES:
+  FontAwesomeKit:
+    :branch: master
+    :git: git@github.com:PrideChung/FontAwesomeKit.git
+
+CHECKOUT OPTIONS:
+  FontAwesomeKit:
+    :commit: eac30313fee77f6db1b6832b1d4b7d8f2007b381
+    :git: git@github.com:PrideChung/FontAwesomeKit.git
+
 SPEC CHECKSUMS:
+  FontAwesomeKit: 3614979b3dbb0ec3f7fac1bd760b91f66c31db67
   Intrepid: c38decf040ef64b707e855e06e97773f51502bd4
   IP-UIKit-Wisdom: cd9838571e97427a0c61c05d856eaaca9afd7c1a
 

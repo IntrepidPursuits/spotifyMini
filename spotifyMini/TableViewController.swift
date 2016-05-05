@@ -12,7 +12,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
 
     @IBOutlet weak var searchBar: UISearchBar!
     let cellIdentifier = "basicCell"
-    var searchResults = [SPTJSONObjectBase]()
+    var searchResults = [SPTPartialTrack]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,11 +28,10 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
 
-        if let track = self.searchResults[indexPath.row] as? SPTPartialTrack {
-            cell.textLabel?.text = track.name
-            let artist = track.artists.first as? SPTPartialArtist
-            cell.detailTextLabel?.text = artist?.name
-        }
+        let track = self.searchResults[indexPath.row]
+        cell.textLabel?.text = track.name
+        let artist = track.artists.first
+        cell.detailTextLabel?.text = artist?.name
 
         return cell
     }
@@ -50,7 +49,6 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
     }
 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        // TODO: implement search function
         SPTSearch.performSearchWithQuery(searchBar.text, queryType: SPTSearchQueryType.QueryTypeTrack, offset: 0, accessToken: nil) { error, listPage in
             if let error = error {
                 print(error.localizedDescription) //FIXME: throw application error

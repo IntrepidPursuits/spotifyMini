@@ -12,16 +12,8 @@ let TestSpotifyURI = "spotify:track:6gtUSdZjPovyVuOYAByZeU" // TODO: dont forget
 
 class ViewController: UIViewController, SPTAuthViewDelegate {
 
-    var session: SPTSession? {
-        didSet {
-            if self.session != nil {
-//                self.logInButton.hidden = true
-            }
-        }
-    }
-
+    var session: SPTSession?
     lazy var player = SPTAudioStreamingController(clientId: SPTAuth.defaultInstance().clientID)
-
     @IBOutlet weak var logInButton: UIButton!
 
     // MARK: View Life Cycle
@@ -31,8 +23,6 @@ class ViewController: UIViewController, SPTAuthViewDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(recieveSpotifyLogInNotification(_:)), name: AppReturnedFromSpotifyNotification, object: nil)
         self.checkForExistingSession()
     }
-
-
 
     // MARK: SPTSession
 
@@ -74,7 +64,6 @@ class ViewController: UIViewController, SPTAuthViewDelegate {
         }
     }
 
-
     // MARK: Notification Handling
 
     func recieveSpotifyLogInNotification(notification:NSNotification) {
@@ -85,7 +74,6 @@ class ViewController: UIViewController, SPTAuthViewDelegate {
             print(error) // FIXME: handle this error
         }
     }
-
 
     // MARK: SPTAuthViewDelegate
 

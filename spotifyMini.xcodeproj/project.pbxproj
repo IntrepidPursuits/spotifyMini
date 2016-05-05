@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		6E12E7B294F7B323503292A9 /* Pods_spotifyMini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA853E5F0B76BCECCDF8948 /* Pods_spotifyMini.framework */; };
 		B81F7F9C1CDA99E30092F13D /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81F7F9B1CDA99E30092F13D /* TableViewController.swift */; };
+		B84D372B1CDBB809006313C2 /* PopularTrackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84D372A1CDBB809006313C2 /* PopularTrackTableViewCell.swift */; };
+		B84D372D1CDBB862006313C2 /* PopularTrackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B84D372C1CDBB862006313C2 /* PopularTrackTableViewCell.xib */; };
 		B8A7E0CB1CDA4AB300E10028 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A7E0CA1CDA4AB300E10028 /* AppDelegate.swift */; };
 		B8A7E0D01CDA4AB300E10028 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8A7E0CE1CDA4AB300E10028 /* Main.storyboard */; };
 		B8A7E0D21CDA4AB300E10028 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8A7E0D11CDA4AB300E10028 /* Assets.xcassets */; };
@@ -23,6 +25,8 @@
 		448EB3A5B3A48CB8C155E91F /* Pods-spotifyMini.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spotifyMini.debug.xcconfig"; path = "Pods/Target Support Files/Pods-spotifyMini/Pods-spotifyMini.debug.xcconfig"; sourceTree = "<group>"; };
 		AAA853E5F0B76BCECCDF8948 /* Pods_spotifyMini.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spotifyMini.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B81F7F9B1CDA99E30092F13D /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		B84D372A1CDBB809006313C2 /* PopularTrackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularTrackTableViewCell.swift; sourceTree = "<group>"; };
+		B84D372C1CDBB862006313C2 /* PopularTrackTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularTrackTableViewCell.xib; sourceTree = "<group>"; };
 		B8A7E0C71CDA4AB300E10028 /* spotifyMini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spotifyMini.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8A7E0CA1CDA4AB300E10028 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B8A7E0CF1CDA4AB300E10028 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -84,6 +88,8 @@
 				B8A7E0E41CDA53CE00E10028 /* ViewController.swift */,
 				B81F7F9B1CDA99E30092F13D /* TableViewController.swift */,
 				B8AC3ACA1CDB804400914FAE /* ArtistViewController.swift */,
+				B84D372A1CDBB809006313C2 /* PopularTrackTableViewCell.swift */,
+				B84D372C1CDBB862006313C2 /* PopularTrackTableViewCell.xib */,
 				B8A7E0CE1CDA4AB300E10028 /* Main.storyboard */,
 				B8AC3ACC1CDB818300914FAE /* lobsterDog.jpg */,
 				B8A7E0D11CDA4AB300E10028 /* Assets.xcassets */,
@@ -165,6 +171,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B84D372D1CDBB862006313C2 /* PopularTrackTableViewCell.xib in Resources */,
 				B8A7E0D51CDA4AB300E10028 /* LaunchScreen.storyboard in Resources */,
 				B8A7E0D21CDA4AB300E10028 /* Assets.xcassets in Resources */,
 				B8AC3ACD1CDB818300914FAE /* lobsterDog.jpg in Resources */,
@@ -229,6 +236,7 @@
 			files = (
 				B8A7E0E61CDA53CE00E10028 /* ViewController.swift in Sources */,
 				B81F7F9C1CDA99E30092F13D /* TableViewController.swift in Sources */,
+				B84D372B1CDBB809006313C2 /* PopularTrackTableViewCell.swift in Sources */,
 				B8A7E0CB1CDA4AB300E10028 /* AppDelegate.swift in Sources */,
 				B8AC3ACB1CDB804400914FAE /* ArtistViewController.swift in Sources */,
 			);
