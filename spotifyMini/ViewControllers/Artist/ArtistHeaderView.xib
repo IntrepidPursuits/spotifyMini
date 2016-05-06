@@ -25,13 +25,13 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lobsterDog.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Nuk-XY-L8L">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
                 </imageView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Goh-BI-jHR">
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Goh-BI-jHR">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lobsterDog.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="WiA-qF-OdJ">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
                         </imageView>
-                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J9O-bO-Cd1">
+                        <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J9O-bO-Cd1">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="SBd-gI-7W8" userLabel="OtherViews">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
@@ -66,8 +66,8 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="fvG-3W-ZUM"/>
                                         <exclude reference="UjH-C0-51i"/>
+                                        <exclude reference="fvG-3W-ZUM"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -76,6 +76,7 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="350" id="6lO-Ay-FrJ"/>
                         <constraint firstItem="J9O-bO-Cd1" firstAttribute="bottom" secondItem="WiA-qF-OdJ" secondAttribute="bottom" id="8H9-yL-EEY"/>
                         <constraint firstItem="J9O-bO-Cd1" firstAttribute="trailing" secondItem="WiA-qF-OdJ" secondAttribute="trailing" id="8aX-mU-Wjv"/>
                         <constraint firstItem="J9O-bO-Cd1" firstAttribute="top" secondItem="WiA-qF-OdJ" secondAttribute="top" id="JcU-AH-n2V"/>
@@ -84,21 +85,36 @@
                         <constraint firstItem="WiA-qF-OdJ" firstAttribute="top" secondItem="Goh-BI-jHR" secondAttribute="top" id="Zvc-Ji-gF3"/>
                         <constraint firstItem="J9O-bO-Cd1" firstAttribute="leading" secondItem="WiA-qF-OdJ" secondAttribute="leading" id="dgh-WB-CSG"/>
                         <constraint firstAttribute="trailing" secondItem="WiA-qF-OdJ" secondAttribute="trailing" id="h30-n5-4xL"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="350" id="nu7-if-0vM"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="6lO-Ay-FrJ"/>
+                        </mask>
+                    </variation>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="Goh-BI-jHR" secondAttribute="bottom" priority="500" id="Ibu-aW-A8j"/>
                 <constraint firstItem="Nuk-XY-L8L" firstAttribute="leading" secondItem="nXh-Fe-sP1" secondAttribute="leading" id="L0O-6y-3ay"/>
-                <constraint firstAttribute="bottom" secondItem="Goh-BI-jHR" secondAttribute="bottom" id="LFz-Bm-MGR"/>
-                <constraint firstAttribute="bottom" secondItem="Nuk-XY-L8L" secondAttribute="bottom" priority="998" id="Nct-TP-yyZ"/>
+                <constraint firstAttribute="bottom" secondItem="Nuk-XY-L8L" secondAttribute="bottom" id="Nct-TP-yyZ"/>
                 <constraint firstAttribute="trailing" secondItem="Nuk-XY-L8L" secondAttribute="trailing" id="Onc-k7-bbA"/>
-                <constraint firstAttribute="trailing" secondItem="Goh-BI-jHR" secondAttribute="trailing" id="aSX-fe-UZb"/>
+                <constraint firstItem="Goh-BI-jHR" firstAttribute="trailing" secondItem="nXh-Fe-sP1" secondAttribute="trailing" id="YAL-pd-Nj1"/>
                 <constraint firstItem="Nuk-XY-L8L" firstAttribute="top" secondItem="nXh-Fe-sP1" secondAttribute="top" id="cCO-nA-rlE"/>
-                <constraint firstItem="Goh-BI-jHR" firstAttribute="top" secondItem="nXh-Fe-sP1" secondAttribute="top" id="qkE-sS-4Vb"/>
-                <constraint firstItem="Goh-BI-jHR" firstAttribute="leading" secondItem="nXh-Fe-sP1" secondAttribute="leading" id="rf3-30-IxQ"/>
+                <constraint firstItem="Goh-BI-jHR" firstAttribute="leading" secondItem="nXh-Fe-sP1" secondAttribute="leading" id="eEN-Rk-NEI"/>
+                <constraint firstItem="Goh-BI-jHR" firstAttribute="height" relation="greaterThanOrEqual" secondItem="Nuk-XY-L8L" secondAttribute="height" id="fSh-aL-5Bv"/>
+                <constraint firstItem="J9O-bO-Cd1" firstAttribute="top" secondItem="nXh-Fe-sP1" secondAttribute="top" id="niK-Qa-CSV"/>
+                <constraint firstItem="Goh-BI-jHR" firstAttribute="top" secondItem="nXh-Fe-sP1" secondAttribute="top" id="pFh-qw-nBH"/>
+                <constraint firstItem="Goh-BI-jHR" firstAttribute="height" secondItem="Nuk-XY-L8L" secondAttribute="height" id="wTo-JL-85r"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="Ibu-aW-A8j"/>
+                    <exclude reference="wTo-JL-85r"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="626" y="341"/>
         </view>
     </objects>

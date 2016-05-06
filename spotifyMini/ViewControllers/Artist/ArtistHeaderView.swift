@@ -10,7 +10,6 @@ import Foundation
 
 class ArtistHeaderView : UIView {
 
-
     @IBOutlet var view: UIView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
@@ -33,10 +32,10 @@ class ArtistHeaderView : UIView {
         NSBundle.mainBundle().loadNibNamed("ArtistHeaderView", owner: self, options: nil)
         self.addSubview(self.view)
         self.view.translatesAutoresizingMaskIntoConstraints = false
-        self.view.topAnchor.constraintEqualToAnchor(self.topAnchor).active = true
-        self.view.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor).active = true
-        self.view.leftAnchor.constraintEqualToAnchor(self.leftAnchor).active = true
-        self.view.rightAnchor.constraintEqualToAnchor(self.rightAnchor).active = true
+        self.view.heightAnchor.constraintEqualToAnchor(self.heightAnchor).active = true
+        self.view.widthAnchor.constraintEqualToAnchor(self.widthAnchor).active = true
+        self.view.centerXAnchor.constraintEqualToAnchor(self.centerXAnchor).active = true
+        self.view.centerYAnchor.constraintEqualToAnchor(self.centerYAnchor).active = true
         self.clipsToBounds = true
     }
 }

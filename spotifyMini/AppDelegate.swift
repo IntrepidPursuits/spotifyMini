@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     NSNotificationCenter.defaultCenter().postNotificationName(AppReturnedFromSpotifyNotification, object: nil, userInfo: ["error":error])
                     return
                 }
-                NSNotificationCenter.defaultCenter().postNotificationName(AppReturnedFromSpotifyNotification, object: nil, userInfo: ["session":session])
+                NSNotificationCenter.defaultCenter().postNotificationName(AppReturnedFromSpotifyNotification, object: nil, userInfo: [SpotifySessionUserDefaultsKey:session])
             })
             return true
         }
