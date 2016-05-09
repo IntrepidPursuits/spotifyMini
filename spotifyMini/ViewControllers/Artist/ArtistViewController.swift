@@ -13,7 +13,9 @@ import FontAwesomeKit
 class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
 
     var artist: SPTArtist?
-    @IBOutlet weak var artistHeaderView: ArtistHeaderView!
+    var artistHeaderView: ArtistHeaderView = {
+        return NSBundle.mainBundle().loadNibNamed(ArtistHeaderView.ip_nibName, owner: nil, options: nil).first as! ArtistHeaderView
+    }()
     @IBOutlet weak var shufflePlayButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableView: UITableView!
@@ -31,7 +33,7 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
     override func viewDidLoad() {
         self.tableView.ip_registerCell(PopularTrackTableViewCell)
         self.tableView.rowHeight = 60
-        self.updateViewsForArtist()
+        self.setupArtistHeaderView()
     }
 
     // MARK: UIScrollViewDelegate
@@ -95,7 +97,7 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
         if userIsPullingDown {
             let affectedAlpha = 1.5 + (yOffset/100.0)
             self.artistHeaderView.blurAlpha = affectedAlpha
-            self.artistHeaderView.blurHeightConstraint.constant = 350 + -yOffset
+            self.artistHeaderView.blurHeightConstraint.constant = 325 - yOffset
             self.navigationController?.navigationBar.alpha = affectedAlpha
             self.navigationController?.setNavigationBarHidden(affectedAlpha <= 0.1, animated: true)
         } else {
@@ -111,6 +113,23 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
     }
 
     // MARK: View Setup
+
+    func setupArtistHeaderView() {
+        self.view.addSubview(self.artistHeaderView)
+        self.artistHeaderView.translatesAutoresizingMaskIntoConstraints = false
+        self.artistHeaderView.topAnchor.constraintEqualToAnchor(self.view.topAnchor).active = true
+        self.artistHeaderView.trailingAnchor.constraintEqualToAnchor(self.view.trailingAnchor).active = true
+        self.artistHeaderView.leadingAnchor.constraintEqualToAnchor(self.view.leadingAnchor).active = true
+
+        self.artistHeaderView.bottomAnchor.constraintGreaterThanOrEqualToAnchor(self.view.topAnchor, constant: 85).active = true
+
+        let bottomToShufflePlayCenterY = self.artistHeaderView.bottomAnchor.constraintEqualToAnchor(self.shufflePlayButton.centerYAnchor)
+        bottomToShufflePlayCenterY.priority = 750
+        bottomToShufflePlayCenterY.active = true
+
+        self.artistHeaderView.artist = artist
+        self.view.sendSubviewToBack(self.artistHeaderView)
+    }
 
     func headerForSection(withTitle title: String) -> UIView {
         let header = UIView()
@@ -133,12 +152,5 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
         bottomBorder.bottomAnchor.constraintEqualToAnchor(header.bottomAnchor).active = true
 
         return header
-    }
-
-    func updateViewsForArtist() {
-        if let artist = self.artist {
-            self.title = artist.name
-            self.artistHeaderView.artist = artist
-        }
     }
 }

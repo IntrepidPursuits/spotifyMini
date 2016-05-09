@@ -113,9 +113,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t1I-cQ-MjZ" userLabel="Image Container View" customClass="ArtistHeaderView" customModule="spotifyMini" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
-                            </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CUP-dL-0fH">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
@@ -123,13 +120,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="2000"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F73-Dh-z1z" userLabel="Clear Placeholder View">
-                                                <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="325"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="350" id="7kS-tf-GRO"/>
+                                                    <constraint firstAttribute="height" constant="325" id="7kS-tf-GRO"/>
                                                 </constraints>
                                             </view>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="woT-EF-gNh">
-                                                <rect key="frame" x="0.0" y="350" width="600" height="1000"/>
+                                                <rect key="frame" x="0.0" y="325" width="600" height="1000"/>
                                                 <color key="backgroundColor" red="0.074509803920000006" green="0.066666666669999999" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1000" id="5gC-HC-Rst"/>
@@ -174,7 +171,7 @@
                                 </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6C6-b4-HdE">
-                                <rect key="frame" x="120" y="325" width="360" height="50"/>
+                                <rect key="frame" x="120" y="300" width="360" height="50"/>
                                 <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="6v5-Ni-HQx"/>
@@ -193,20 +190,15 @@
                         <color key="backgroundColor" red="0.074509803920000006" green="0.066666666669999999" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="6C6-b4-HdE" firstAttribute="width" secondItem="aAr-qh-LFb" secondAttribute="width" multiplier="0.6" id="6M1-q2-AYG"/>
-                            <constraint firstItem="t1I-cQ-MjZ" firstAttribute="bottom" secondItem="6C6-b4-HdE" secondAttribute="centerY" priority="998" id="90J-ti-hDs"/>
                             <constraint firstItem="0oR-Ml-PM8" firstAttribute="width" secondItem="aAr-qh-LFb" secondAttribute="width" id="H4z-8V-bAU"/>
                             <constraint firstItem="6C6-b4-HdE" firstAttribute="centerY" secondItem="woT-EF-gNh" secondAttribute="top" priority="750" id="KG4-py-7HI"/>
                             <constraint firstItem="WJO-zd-ItZ" firstAttribute="top" secondItem="CUP-dL-0fH" secondAttribute="bottom" id="MwP-bt-WdX"/>
                             <constraint firstAttribute="trailing" secondItem="CUP-dL-0fH" secondAttribute="trailing" id="NvY-Fw-pAl"/>
-                            <constraint firstAttribute="trailing" secondItem="t1I-cQ-MjZ" secondAttribute="trailing" id="OdJ-SR-7qi"/>
                             <constraint firstItem="6C6-b4-HdE" firstAttribute="top" relation="greaterThanOrEqual" secondItem="aAr-qh-LFb" secondAttribute="top" constant="60" id="Pwk-10-EOG"/>
                             <constraint firstItem="CUP-dL-0fH" firstAttribute="width" secondItem="aAr-qh-LFb" secondAttribute="width" id="VrC-IT-r8Z"/>
-                            <constraint firstItem="t1I-cQ-MjZ" firstAttribute="leading" secondItem="aAr-qh-LFb" secondAttribute="leading" id="aPJ-VE-Umy"/>
                             <constraint firstItem="CUP-dL-0fH" firstAttribute="leading" secondItem="aAr-qh-LFb" secondAttribute="leading" id="b8c-MD-OhG"/>
                             <constraint firstItem="6C6-b4-HdE" firstAttribute="centerX" secondItem="aAr-qh-LFb" secondAttribute="centerX" id="n4b-ST-DiF"/>
                             <constraint firstItem="CUP-dL-0fH" firstAttribute="top" secondItem="aAr-qh-LFb" secondAttribute="top" id="r5N-FF-kFL"/>
-                            <constraint firstItem="t1I-cQ-MjZ" firstAttribute="top" secondItem="aAr-qh-LFb" secondAttribute="top" id="srO-ow-gkI"/>
-                            <constraint firstItem="t1I-cQ-MjZ" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="aAr-qh-LFb" secondAttribute="top" priority="999" constant="85" id="xea-SO-iGa"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="21I-mb-bzS">
@@ -216,7 +208,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="artistHeaderView" destination="t1I-cQ-MjZ" id="hDp-8d-oWM"/>
                         <outlet property="moreBarButton" destination="Nz1-Pe-JK8" id="Qbh-Xe-IAT"/>
                         <outlet property="scrollView" destination="CUP-dL-0fH" id="Wq9-O0-wTU"/>
                         <outlet property="shufflePlayButton" destination="6C6-b4-HdE" id="RrW-gU-guc"/>
