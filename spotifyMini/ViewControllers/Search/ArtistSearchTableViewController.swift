@@ -72,6 +72,7 @@ class ArtistSearchTableViewController: UIViewController, UITableViewDelegate, UI
     }
 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
         SPTSearch.performSearchWithQuery(searchBar.text, queryType: SPTSearchQueryType.QueryTypeArtist, offset: 0, accessToken: nil) { error, listPage in
             if let error = error {
                 print(error.localizedDescription) //FIXME: throw application error
@@ -142,6 +143,7 @@ class ArtistSearchTableViewController: UIViewController, UITableViewDelegate, UI
             let ip = self.tableView.indexPathForSelectedRow,
             let artistVC = segue.destinationViewController as? ArtistViewController {
             artistVC.artist = self.fullArtists[ip.row]
+            artistVC.session = self.session
         }
     }
     

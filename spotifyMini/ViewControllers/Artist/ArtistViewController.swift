@@ -13,6 +13,9 @@ import FontAwesomeKit
 class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
 
     var artist: SPTArtist?
+    var session: SPTSession?
+    let player = SPTAudioStreamingController(clientId: SPTAuth.defaultInstance().clientID)
+    var topTracks = [SPTTrack]()
     var artistHeaderView: ArtistHeaderView = {
         return NSBundle.mainBundle().loadNibNamed(ArtistHeaderView.ip_nibName, owner: nil, options: nil).first as! ArtistHeaderView
     }()
@@ -34,6 +37,7 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
         self.tableView.ip_registerCell(PopularTrackTableViewCell)
         self.tableView.rowHeight = 60
         self.setupArtistHeaderView()
+        self.fetchTopTracksForArtist()
     }
 
     // MARK: UIScrollViewDelegate
@@ -57,12 +61,13 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
     // MARK: UITableViewDataSource
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5 // FIXME: magic number
+        return self.topTracks.count
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.ip_dequeueCell(indexPath) as PopularTrackTableViewCell
         cell.numberLabel?.text = "\(indexPath.row+1)"
+        cell.track = self.topTracks[indexPath.row]
         return cell
     }
 
@@ -79,6 +84,11 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
 
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40;
+    }
+
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let track = self.topTracks[indexPath.row]
+        self.playTrack(track)
     }
 
     // MARK: View Helpers
@@ -152,5 +162,46 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
         bottomBorder.bottomAnchor.constraintEqualToAnchor(header.bottomAnchor).active = true
 
         return header
+    }
+
+    // MARK: Spotify
+    // FIXME: move all of this out into a Utility singleton, break into functions
+
+    func fetchTopTracksForArtist() {
+        if let session = self.session {
+            artist?.requestTopTracksForTerritory("US", withSession: session, callback: { error, tracks in
+                if let error = error {
+                    print(error.localizedDescription) // FIXME: throw application error
+                } else if let tracks = tracks as? [SPTTrack] {
+                    self.topTracks = tracks
+                    self.tableView.reloadData()
+                }
+            })
+        }
+    }
+
+    // FIXME: cannot be in a VC, causes a crash when dealloc'd
+    func playTrack(track: SPTTrack) {
+        if let session = self.session where session.isValid() {
+            if self.player.loggedIn {
+                self.player.playURIs([track.uri], fromIndex: 0, callback: { error in
+                    if let error = error {
+                        print(error.localizedDescription) // FIXME: throw application error
+                    }
+                })
+            } else {
+                self.tableView.userInteractionEnabled = false
+                self.player.loginWithSession(self.session, callback: { error in
+                    self.tableView.userInteractionEnabled = true
+                    if let error = error {
+                        print(error.localizedDescription) // FIXME: throw application error
+                    } else {
+                        self.playTrack(track)
+                    }
+                })
+            }
+        } else {
+            print("session is invalid :(") // FIXME: throw application error
+        }
     }
 }
