@@ -91,10 +91,11 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
     }
 
     func animateHeaderView(withOffset yOffset: CGFloat) {
-        let userIsPullingDown = yOffset < 0
+        let userIsPullingDown = yOffset <= 0
         if userIsPullingDown {
             let affectedAlpha = 1.5 + (yOffset/100.0)
             self.artistHeaderView.blurAlpha = affectedAlpha
+            self.artistHeaderView.blurHeightConstraint.constant = 350 + -yOffset
             self.navigationController?.navigationBar.alpha = affectedAlpha
             self.navigationController?.setNavigationBarHidden(affectedAlpha <= 0.1, animated: true)
         } else {

@@ -17,7 +17,8 @@ class ArtistHeaderView : UIView {
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var blurImageView: UIImageView!
     @IBOutlet weak var blurContainerView: UIView!
-
+    @IBOutlet weak var blurHeightConstraint: NSLayoutConstraint!
+    
     var artist: SPTArtist? {
         didSet {
             if let artist = self.artist {

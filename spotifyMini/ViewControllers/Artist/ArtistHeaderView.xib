@@ -10,6 +10,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ArtistHeaderView" customModule="spotifyMini" customModuleProvider="target">
             <connections>
                 <outlet property="blurContainerView" destination="Goh-BI-jHR" id="nmZ-TB-SU8"/>
+                <outlet property="blurHeightConstraint" destination="shi-me-m9C" id="LWq-he-2yv"/>
                 <outlet property="blurImageView" destination="WiA-qF-OdJ" id="Lrq-5s-GUa"/>
                 <outlet property="headerImageView" destination="Nuk-XY-L8L" id="A1K-GM-QE7"/>
                 <outlet property="nameLabel" destination="G9Z-Ro-hqa" id="Z6x-Yc-VX7"/>
@@ -76,7 +77,6 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="350" id="6lO-Ay-FrJ"/>
                         <constraint firstItem="J9O-bO-Cd1" firstAttribute="bottom" secondItem="WiA-qF-OdJ" secondAttribute="bottom" id="8H9-yL-EEY"/>
                         <constraint firstItem="J9O-bO-Cd1" firstAttribute="trailing" secondItem="WiA-qF-OdJ" secondAttribute="trailing" id="8aX-mU-Wjv"/>
                         <constraint firstItem="J9O-bO-Cd1" firstAttribute="top" secondItem="WiA-qF-OdJ" secondAttribute="top" id="JcU-AH-n2V"/>
@@ -85,13 +85,8 @@
                         <constraint firstItem="WiA-qF-OdJ" firstAttribute="top" secondItem="Goh-BI-jHR" secondAttribute="top" id="Zvc-Ji-gF3"/>
                         <constraint firstItem="J9O-bO-Cd1" firstAttribute="leading" secondItem="WiA-qF-OdJ" secondAttribute="leading" id="dgh-WB-CSG"/>
                         <constraint firstAttribute="trailing" secondItem="WiA-qF-OdJ" secondAttribute="trailing" id="h30-n5-4xL"/>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="350" id="nu7-if-0vM"/>
+                        <constraint firstAttribute="height" constant="350" id="shi-me-m9C"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="6lO-Ay-FrJ"/>
-                        </mask>
-                    </variation>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -112,6 +107,7 @@
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="Ibu-aW-A8j"/>
+                    <exclude reference="fSh-aL-5Bv"/>
                     <exclude reference="wTo-JL-85r"/>
                 </mask>
             </variation>
