@@ -6,5 +6,6 @@ use_frameworks!
 target 'spotifyMini' do
 	pod 'Intrepid'
 	pod 'FontAwesomeKit', :git => 'git@github.com:PrideChung/FontAwesomeKit.git', :branch => 'master'
+	pod 'Kingfisher'
 end
 

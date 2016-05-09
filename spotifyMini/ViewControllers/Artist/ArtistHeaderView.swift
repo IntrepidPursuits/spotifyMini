@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Kingfisher
 
 class ArtistHeaderView : UIView {
 
@@ -17,11 +18,27 @@ class ArtistHeaderView : UIView {
     @IBOutlet weak var blurImageView: UIImageView!
     @IBOutlet weak var blurContainerView: UIView!
 
+    var artist: SPTArtist? {
+        didSet {
+            if let artist = self.artist {
+                nameLabel.text = artist.name
+                if let imageURL = artist.largestImage.imageURL {
+                    profileImageView.kf_setImageWithURL(imageURL, placeholderImage: nil, optionsInfo: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
+                        self.headerImageView.image = image
+                        self.blurImageView.image = image
+                    })
+                }
+            }
+        }
+    }
+
     var blurAlpha: CGFloat = 1 {
         didSet {
             blurContainerView.alpha = blurAlpha
         }
     }
+
+    // MARK: Creation
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

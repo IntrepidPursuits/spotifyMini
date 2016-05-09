@@ -12,14 +12,7 @@ import FontAwesomeKit
 
 class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
 
-    var artist: SPTArtist? {
-        didSet {
-            if let artist = self.artist {
-                self.updateViews(withArtist: artist)
-            }
-        }
-    }
-
+    var artist: SPTArtist?
     @IBOutlet weak var artistHeaderView: ArtistHeaderView!
     @IBOutlet weak var shufflePlayButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -38,6 +31,7 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
     override func viewDidLoad() {
         self.tableView.ip_registerCell(PopularTrackTableViewCell)
         self.tableView.rowHeight = 60
+        self.updateViewsForArtist()
     }
 
     // MARK: UIScrollViewDelegate
@@ -107,7 +101,7 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
             self.artistHeaderView.blurAlpha = 1.0
         }
     }
-    
+
     func swapContainerViewAndScrollViewPositions() {
         if let scrollViewIndex = self.view.subviews.indexOf(self.scrollView),
             let artistHeaderViewIndex = self.view.subviews.indexOf(self.artistHeaderView) {
@@ -136,12 +130,14 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
         bottomBorder.leadingAnchor.constraintEqualToAnchor(header.leadingAnchor).active = true
         bottomBorder.trailingAnchor.constraintEqualToAnchor(header.trailingAnchor).active = true
         bottomBorder.bottomAnchor.constraintEqualToAnchor(header.bottomAnchor).active = true
-        
+
         return header
     }
 
-    func updateViews(withArtist artist: SPTArtist) {
-        self.title = artist.name
-        // TODO: update views for passed artist
+    func updateViewsForArtist() {
+        if let artist = self.artist {
+            self.title = artist.name
+            self.artistHeaderView.artist = artist
+        }
     }
 }
