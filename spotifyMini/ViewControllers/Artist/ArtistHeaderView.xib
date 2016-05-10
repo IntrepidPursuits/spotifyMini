@@ -28,32 +28,20 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="325"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lobsterDog.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="AXS-SC-jEQ">
-                                        <rect key="frame" x="240" y="73" width="120" height="120"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="AXS-SC-jEQ" secondAttribute="height" multiplier="1:1" id="P3k-1g-nc7"/>
-                                            <constraint firstAttribute="width" constant="120" id="vT5-Fw-3A1"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="60"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lobster Dog" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G9Z-Ro-hqa">
-                                        <rect key="frame" x="233" y="209" width="134" height="29"/>
+                                        <rect key="frame" x="233" y="212" width="134" height="29"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="249,491 MONTHLY LISTENERS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LIv-rB-4ux">
-                                        <rect key="frame" x="223" y="278" width="154" height="12"/>
+                                        <rect key="frame" x="223" y="281" width="154" height="12"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DFj-c1-Wtp">
-                                        <rect key="frame" x="260" y="246" width="80" height="24"/>
+                                        <rect key="frame" x="260" y="249" width="80" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="8to-mp-YQU"/>
                                             <constraint firstAttribute="width" constant="80" id="kaS-vu-qXf"/>
@@ -63,23 +51,32 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lobsterDog.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="AXS-SC-jEQ">
+                                        <rect key="frame" x="240" y="84" width="120" height="120"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="AXS-SC-jEQ" secondAttribute="height" multiplier="1:1" id="P3k-1g-nc7"/>
+                                            <constraint firstAttribute="height" constant="120" id="xfE-uw-99d"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="LIv-rB-4ux" firstAttribute="centerX" secondItem="SBd-gI-7W8" secondAttribute="centerX" id="313-g8-F3X"/>
-                                    <constraint firstItem="AXS-SC-jEQ" firstAttribute="bottom" secondItem="G9Z-Ro-hqa" secondAttribute="top" constant="-16" id="CDN-e6-yVR"/>
+                                    <constraint firstItem="AXS-SC-jEQ" firstAttribute="bottom" secondItem="G9Z-Ro-hqa" secondAttribute="top" constant="-8" id="CDN-e6-yVR"/>
                                     <constraint firstAttribute="bottom" secondItem="G9Z-Ro-hqa" secondAttribute="bottom" constant="100" id="CJe-UV-Ios"/>
                                     <constraint firstItem="DFj-c1-Wtp" firstAttribute="centerX" secondItem="SBd-gI-7W8" secondAttribute="centerX" id="Cfl-xw-vsb"/>
                                     <constraint firstItem="G9Z-Ro-hqa" firstAttribute="leading" secondItem="AXS-SC-jEQ" secondAttribute="trailing" id="UjH-C0-51i"/>
-                                    <constraint firstAttribute="bottom" secondItem="LIv-rB-4ux" secondAttribute="bottom" constant="35" id="W2O-E7-SJh"/>
+                                    <constraint firstAttribute="bottom" secondItem="LIv-rB-4ux" secondAttribute="bottom" constant="32" id="W2O-E7-SJh"/>
                                     <constraint firstItem="AXS-SC-jEQ" firstAttribute="width" secondItem="SBd-gI-7W8" secondAttribute="width" multiplier="0.25" id="fvG-3W-ZUM"/>
                                     <constraint firstItem="AXS-SC-jEQ" firstAttribute="centerX" secondItem="SBd-gI-7W8" secondAttribute="centerX" id="fxw-nE-wKB"/>
                                     <constraint firstItem="DFj-c1-Wtp" firstAttribute="top" secondItem="G9Z-Ro-hqa" secondAttribute="bottom" constant="8" id="g9u-Oa-103"/>
                                     <constraint firstItem="G9Z-Ro-hqa" firstAttribute="centerX" secondItem="SBd-gI-7W8" secondAttribute="centerX" id="oFH-fY-5g1"/>
                                     <constraint firstItem="LIv-rB-4ux" firstAttribute="top" secondItem="DFj-c1-Wtp" secondAttribute="bottom" constant="8" id="pez-CG-fn1"/>
+                                    <constraint firstItem="AXS-SC-jEQ" firstAttribute="height" secondItem="SBd-gI-7W8" secondAttribute="height" multiplier="0.35" id="tWx-Y6-M7b"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="fvG-3W-ZUM"/>
+                                        <exclude reference="tWx-Y6-M7b"/>
                                         <exclude reference="CJe-UV-Ios"/>
                                         <exclude reference="UjH-C0-51i"/>
                                     </mask>
@@ -104,26 +101,16 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="Goh-BI-jHR" secondAttribute="bottom" priority="500" id="Ibu-aW-A8j"/>
                 <constraint firstItem="Nuk-XY-L8L" firstAttribute="leading" secondItem="nXh-Fe-sP1" secondAttribute="leading" id="L0O-6y-3ay"/>
                 <constraint firstAttribute="bottom" secondItem="Nuk-XY-L8L" secondAttribute="bottom" id="Nct-TP-yyZ"/>
                 <constraint firstAttribute="trailing" secondItem="Nuk-XY-L8L" secondAttribute="trailing" id="Onc-k7-bbA"/>
                 <constraint firstItem="Goh-BI-jHR" firstAttribute="trailing" secondItem="nXh-Fe-sP1" secondAttribute="trailing" id="YAL-pd-Nj1"/>
                 <constraint firstItem="Nuk-XY-L8L" firstAttribute="top" secondItem="nXh-Fe-sP1" secondAttribute="top" id="cCO-nA-rlE"/>
                 <constraint firstItem="Goh-BI-jHR" firstAttribute="leading" secondItem="nXh-Fe-sP1" secondAttribute="leading" id="eEN-Rk-NEI"/>
-                <constraint firstItem="Goh-BI-jHR" firstAttribute="height" relation="greaterThanOrEqual" secondItem="Nuk-XY-L8L" secondAttribute="height" id="fSh-aL-5Bv"/>
                 <constraint firstItem="J9O-bO-Cd1" firstAttribute="top" secondItem="nXh-Fe-sP1" secondAttribute="top" id="niK-Qa-CSV"/>
                 <constraint firstItem="Goh-BI-jHR" firstAttribute="top" secondItem="nXh-Fe-sP1" secondAttribute="top" id="pFh-qw-nBH"/>
-                <constraint firstItem="Goh-BI-jHR" firstAttribute="height" secondItem="Nuk-XY-L8L" secondAttribute="height" id="wTo-JL-85r"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="Ibu-aW-A8j"/>
-                    <exclude reference="fSh-aL-5Bv"/>
-                    <exclude reference="wTo-JL-85r"/>
-                </mask>
-            </variation>
             <connections>
                 <outlet property="blurContainerView" destination="Goh-BI-jHR" id="pv3-n4-amG"/>
                 <outlet property="blurHeightConstraint" destination="shi-me-m9C" id="l88-OT-d49"/>
