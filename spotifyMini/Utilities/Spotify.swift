@@ -48,13 +48,14 @@ class Spotify {
 
     // MARK: SPTSearch
 
-    func searchForArtists(withQuery query: String, completion: (Result<[SPTPartialArtist]>) -> Void) {
+    func searchForArtists(withQuery query: String, completion: (Result<[Artist]>) -> Void) {
         SPTSearch.performSearchWithQuery(query, queryType: SPTSearchQueryType.QueryTypeArtist, offset: 0, accessToken: nil) { error, listPage in
             if error != nil {
                 completion(.Failure(SpotifyError.RequestFailed))
             } else if let listPage = listPage as? SPTListPage,
                 let partialArtists = listPage.items as? [SPTPartialArtist] {
-                completion(.Success(partialArtists))
+                let artists = partialArtists.map { Artist(partialArtist: $0) }
+                completion(.Success(artists))
             }
         }
     }

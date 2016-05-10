@@ -29,15 +29,16 @@ class ArtistHeaderView : UIView {
     }
     @IBOutlet weak var blurHeightConstraint: NSLayoutConstraint!
 
-    var artist: SPTArtist? {
+    var artist: Artist? {
         didSet {
             if let artist = self.artist {
                 nameLabel.text = artist.name
-                if let imageURL = artist.largestImage?.imageURL {
-                    profileImageView.kf_setImageWithURL(imageURL, placeholderImage: nil, optionsInfo: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
+                if let imageURL = artist.imageURL {
+                    let options = [KingfisherOptionsInfoItem.Transition(.Fade(0.25))]
+                    self.blurImageView.kf_setImageWithURL(imageURL, placeholderImage: nil, optionsInfo: options, progressBlock: nil) { image, error, cacheType, imageURL in
+                        self.profileImageView.image = image
                         self.headerImageView.image = image
-                        self.blurImageView.image = image
-                    })
+                    }
                 }
             }
         }

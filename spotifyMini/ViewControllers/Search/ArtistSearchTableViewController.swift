@@ -16,8 +16,7 @@ class ArtistSearchTableViewController: UIViewController, SPTAuthViewDelegate, UI
 
     let spotify = Spotify.manager
     let cellIdentifier = "basicCell"
-    var searchResults = [SPTPartialArtist]()
-    var fullArtists = [SPTArtist]()
+    var searchResults = [Artist]()
 
     // MARK: View Life Cycle
 
@@ -103,7 +102,7 @@ class ArtistSearchTableViewController: UIViewController, SPTAuthViewDelegate, UI
         if segue.identifier == "toArtistVC",
             let ip = self.tableView.indexPathForSelectedRow,
             let artistVC = segue.destinationViewController as? ArtistViewController {
-            artistVC.partialArtist = self.searchResults[ip.row]
+            artistVC.artist = self.searchResults[ip.row]
         }
     }
     

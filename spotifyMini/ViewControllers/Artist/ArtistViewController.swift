@@ -15,8 +15,11 @@ let ArtistHeaderHeightLarge: CGFloat = 325.0
 
 class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
 
-    var partialArtist: SPTPartialArtist?
-    var artist: SPTArtist?
+    var artist: Artist? {
+        didSet {
+            self.setupArtistWithNotifications()
+        }
+    }
     let spotify = Spotify.manager
     var topTracks = [SPTTrack]()
     var artistHeaderView = ArtistHeaderView.ip_fromNib()
@@ -38,7 +41,6 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
         self.tableView.ip_registerCell(PopularTrackTableViewCell)
         self.tableView.rowHeight = 60
         self.setupArtistHeaderView()
-        self.fetchArtistAndTopTracks()
     }
 
     // MARK: UIScrollViewDelegate
@@ -175,32 +177,45 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
         return header
     }
 
-    // MARK: Spotify
+    // MARK: Artist Notifications
 
-    func fetchArtistAndTopTracks() {
-        if let partialArtist = self.partialArtist {
-            self.spotify.fetchFullArtist(forPartialArtist: partialArtist) { result in
-                if let artist = result.value {
-                    self.artist = artist
-                    self.artistHeaderView.artist = artist
-                    self.fetchTopTracks()
-                } else if let error = result.error as? SpotifyError {
-                    self.presentErrorAlert(error)
-                }
+    func setupArtistWithNotifications() {
+        if let artist = self.artist {
+
+            let artistHasInfoAndTracks = artist.hasFullInfo && artist.topTracks != nil
+            let artistHasInfoButNoTracks = artist.hasFullInfo && artist.topTracks == nil
+            let artistHasNothing = !artist.hasFullInfo && artist.topTracks == nil
+
+            if artistHasInfoAndTracks {
+                self.artistHeaderView.artist = artist
+                self.topTracks = artist.topTracks!
+            } else if artistHasInfoButNoTracks {
+                artist.fetchTopTracks()
+                self.registerForAndHandleTopTracksNotification()
+            } else if artistHasNothing {
+                artist.fetchFullInfo()
+                self.registerForAndHandleFullArtistInfoNotification()
+                artist.fetchTopTracks()
+                self.registerForAndHandleTopTracksNotification()
             }
         }
     }
 
-    func fetchTopTracks() {
-        if let artist = self.artist {
-            self.spotify.fetchTopTracks(forArtist: artist, completion: { result in
-                if let topTracks = result.value {
-                    self.topTracks = topTracks
-                    self.tableView.reloadData()
-                } else if let error = result.error as? SpotifyError{
-                    self.presentErrorAlert(error)
-                }
-            })
+    func registerForAndHandleFullArtistInfoNotification() {
+        NSNotificationCenter.defaultCenter().addObserverForName(ArtistFetchedFullInfoNotification, object: self.artist, queue: nil) { _ in
+            self.artistHeaderView.artist = self.artist
+            self.artist?.fetchTopTracks()
+            // TODO: recieve error
+        }
+    }
+
+    func registerForAndHandleTopTracksNotification() {
+        NSNotificationCenter.defaultCenter().addObserverForName(ArtistFetchedTopTracksNotification, object: self.artist, queue: nil) { _ in
+            if let topTracks = self.artist?.topTracks {
+                self.topTracks = topTracks
+                self.tableView.reloadData()
+            }
+            // TODO: recieve error
         }
     }
 }
