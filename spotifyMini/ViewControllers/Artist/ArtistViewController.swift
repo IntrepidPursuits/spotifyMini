@@ -9,6 +9,7 @@
 import Foundation
 import Intrepid
 import FontAwesomeKit
+import MBProgressHUD
 
 let ArtistHeaderHeightSmall: CGFloat = 275.0
 let ArtistHeaderHeightLarge: CGFloat = 325.0
@@ -16,7 +17,9 @@ let ArtistHeaderHeightLarge: CGFloat = 325.0
 class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
 
     var artist: Artist? {
-        didSet {
+        willSet {
+            self.stopObservingArtistNotifications()
+        } didSet {
             self.setupArtistWithNotifications()
         }
     }
@@ -181,41 +184,46 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
 
     func setupArtistWithNotifications() {
         if let artist = self.artist {
-
-            let artistHasInfoAndTracks = artist.hasFullInfo && artist.topTracks != nil
-            let artistHasInfoButNoTracks = artist.hasFullInfo && artist.topTracks == nil
-            let artistHasNothing = !artist.hasFullInfo && artist.topTracks == nil
-
-            if artistHasInfoAndTracks {
+            // FIXME: have fetchTopTracks/fullInfo just send the notey if there's cached data, no checks necessary
+            if artist.hasFullInfo {
                 self.artistHeaderView.artist = artist
-                self.topTracks = artist.topTracks!
-            } else if artistHasInfoButNoTracks {
-                artist.fetchTopTracks()
-                self.registerForAndHandleTopTracksNotification()
-            } else if artistHasNothing {
+                self.artist?.fetchTopTracks()
+            } else {
                 artist.fetchFullInfo()
-                self.registerForAndHandleFullArtistInfoNotification()
-                artist.fetchTopTracks()
+            }
+            self.registerForAndHandleFullArtistInfoNotification()
+            self.registerForAndHandleTopTracksNotification()
+        }
+    }
+
+    func registerForAndHandleFullArtistInfoNotification() {
+        NSNotificationCenter.defaultCenter().addObserverForName(ArtistFetchedFullInfoNotification, object: self.artist, queue: nil) { notification in
+            if let error = notification.userInfo?[ArtistNotificationErrorUserInfoKey] as? NSError,
+                let spotifyError = SpotifyError(error: error) {
+                self.presentErrorAlert(spotifyError)
+            } else {
+                self.artistHeaderView.artist = self.artist
+                self.artist?.fetchTopTracks()
                 self.registerForAndHandleTopTracksNotification()
             }
         }
     }
 
-    func registerForAndHandleFullArtistInfoNotification() {
-        NSNotificationCenter.defaultCenter().addObserverForName(ArtistFetchedFullInfoNotification, object: self.artist, queue: nil) { _ in
-            self.artistHeaderView.artist = self.artist
-            self.artist?.fetchTopTracks()
-            // TODO: recieve error
-        }
-    }
-
     func registerForAndHandleTopTracksNotification() {
-        NSNotificationCenter.defaultCenter().addObserverForName(ArtistFetchedTopTracksNotification, object: self.artist, queue: nil) { _ in
-            if let topTracks = self.artist?.topTracks {
+        NSNotificationCenter.defaultCenter().addObserverForName(ArtistFetchedTopTracksNotification, object: self.artist, queue: nil) { notification in
+            if let error = notification.userInfo?[ArtistNotificationErrorUserInfoKey] as? NSError,
+                let spotifyError = SpotifyError(error: error) {
+                self.presentErrorAlert(spotifyError)
+            } else if let topTracks = self.artist?.topTracks {
                 self.topTracks = topTracks
                 self.tableView.reloadData()
             }
             // TODO: recieve error
         }
+    }
+
+    func stopObservingArtistNotifications() {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: ArtistFetchedFullInfoNotification, object: self.artist)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: ArtistFetchedTopTracksNotification, object: self.artist)
     }
 }

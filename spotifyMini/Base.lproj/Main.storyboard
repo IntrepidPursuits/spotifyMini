@@ -117,7 +117,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0oR-Ml-PM8">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="2000"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="1250"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F73-Dh-z1z" userLabel="Clear Placeholder View">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="325"/>
@@ -125,7 +125,7 @@
                                                     <constraint firstAttribute="height" constant="325" id="7kS-tf-GRO"/>
                                                 </constraints>
                                             </view>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="woT-EF-gNh">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="woT-EF-gNh">
                                                 <rect key="frame" x="0.0" y="325" width="600" height="1000"/>
                                                 <color key="backgroundColor" red="0.074509803920000006" green="0.066666666669999999" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
@@ -144,7 +144,7 @@
                                             </tableView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="2000" id="2ab-VO-Wvr"/>
+                                            <constraint firstAttribute="height" constant="1250" id="2ab-VO-Wvr"/>
                                             <constraint firstAttribute="trailing" secondItem="F73-Dh-z1z" secondAttribute="trailing" id="3Mp-IB-j8m"/>
                                             <constraint firstItem="F73-Dh-z1z" firstAttribute="top" secondItem="0oR-Ml-PM8" secondAttribute="top" id="BwE-bQ-BPM"/>
                                             <constraint firstItem="F73-Dh-z1z" firstAttribute="leading" secondItem="0oR-Ml-PM8" secondAttribute="leading" id="CaO-ef-IdQ"/>

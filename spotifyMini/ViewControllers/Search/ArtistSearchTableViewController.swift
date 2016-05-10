@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class ArtistSearchTableViewController: UIViewController, SPTAuthViewDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
@@ -62,10 +63,15 @@ class ArtistSearchTableViewController: UIViewController, SPTAuthViewDelegate, UI
     }
 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+
         if let text = searchBar.text {
             searchBar.resignFirstResponder()
+            self.searchResults.removeAll()
+            self.tableView.reloadData()
+            MBProgressHUD.showHUDAddedTo(self.tableView, animated: true).labelText = "Searching..."
             self.spotify.searchForArtists(withQuery: text) { result in
                 if let partialArtists = result.value {
+                    MBProgressHUD.hideHUDForView(self.tableView, animated: false)
                     self.searchResults = partialArtists
                     self.tableView.reloadData()
                 }

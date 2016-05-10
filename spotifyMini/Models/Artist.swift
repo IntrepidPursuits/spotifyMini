@@ -11,11 +11,12 @@ import Intrepid
 
 let ArtistFetchedFullInfoNotification = "ArtistFullInfoFetched"
 let ArtistFetchedTopTracksNotification = "ArtistTopTracksFetched"
+let ArtistNotificationErrorUserInfoKey = "ArtistNotificationError"
 
 class Artist {
 
     private let partialArtist: SPTPartialArtist
-    var fullArtist: SPTArtist?
+    private var fullArtist: SPTArtist?
     private let spotify = Spotify.manager
 
     // MARK: Public Properties
@@ -45,24 +46,24 @@ class Artist {
 
     func fetchFullInfo() {
         self.spotify.fetchFullArtist(forPartialArtist: self.partialArtist) { result in
-            if let fullArtist = result.value {
-                self.fullArtist = fullArtist
-            } else if let error = result.error {
-                print(error)
+            self.fullArtist = result.value
+            var userInfo: [String:AnyObject]?
+            if let error = result.error as? SpotifyError {
+                userInfo?.updateValue(NSError(spotifyError: error), forKey: ArtistNotificationErrorUserInfoKey)
             }
-            NSNotificationCenter.defaultCenter().postNotificationName(ArtistFetchedFullInfoNotification, object: self)
+            NSNotificationCenter.defaultCenter().postNotificationName(ArtistFetchedFullInfoNotification, object: self, userInfo: userInfo)
         }
     }
 
     func fetchTopTracks() {
         if let fullArtist = self.fullArtist {
             self.spotify.fetchTopTracks(forArtist: fullArtist, completion: { result in
-                if let topTracks = result.value {
-                    self.topTracks = topTracks
-                } else if let error = result.error {
-                    print(error)
+                self.topTracks = result.value
+                var userInfo: [String:AnyObject]?
+                if let error = result.error as? SpotifyError {
+                    userInfo?.updateValue(NSError(spotifyError: error), forKey: ArtistNotificationErrorUserInfoKey)
                 }
-                NSNotificationCenter.defaultCenter().postNotificationName(ArtistFetchedTopTracksNotification, object: self)
+                NSNotificationCenter.defaultCenter().postNotificationName(ArtistFetchedTopTracksNotification, object: self, userInfo: userInfo)
             })
         }
     }
