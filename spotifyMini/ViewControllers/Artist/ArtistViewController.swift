@@ -8,47 +8,44 @@
 
 import Foundation
 import Intrepid
+import FontAwesomeKit
 
 class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
 
-    var artist: SPTArtist?
+    var artist: SPTArtist? {
+        didSet {
+            if let artist = self.artist {
+                self.updateViews(withArtist: artist)
+            }
+        }
+    }
 
-    let cellIdentifier = "PopularTrackCell"
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var headerImageViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var artistHeaderView: ArtistHeaderView!
     @IBOutlet weak var shufflePlayButton: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var moreBarButton: UIBarButtonItem! {
+        didSet {
+            let iconSize = 40.0 as CGFloat
+            self.moreBarButton.image = FAKIonIcons.iosMoreIconWithSize(iconSize).imageWithSize(CGSizeMake(iconSize, iconSize))
+        }
+    }
+
+    var headerIsOnTop = false
 
     // MARK: View Life Cycle
 
     override func viewDidLoad() {
-        
         self.tableView.ip_registerCell(PopularTrackTableViewCell)
         self.tableView.rowHeight = 60
-        // FIXME: there has to be a better place for this
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.translucent = true
     }
 
     // MARK: UIScrollViewDelegate
 
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let yOffset = scrollView.contentOffset.y
-        if yOffset <= 0 {
-            let originalConstant = 350.0 as CGFloat // FIXME: magic number?
-            self.headerImageViewHeight.constant = originalConstant + -yOffset
-            self.checkIfNavBarShouldHide(withOffset: yOffset)
-            // TODO: animate blur view opacity (also fade nav bar instead of hide)
-        }
-        let standardNavBarHeight = 60.0 as CGFloat
-        let userHasScrolledUpFarEnough = yOffset > self.shufflePlayButton.frame.origin.y - standardNavBarHeight
-        self.shufflePlayButton.hidden = userHasScrolledUpFarEnough // FIXME: don't hide, use <= constraints to pin instead
-    }
-
-    func checkIfNavBarShouldHide(withOffset yOffset: CGFloat) {
-        let threshold = -100.0 as CGFloat
-        let scrolledPastThreshold = yOffset < threshold
-        self.navigationController?.setNavigationBarHidden(scrolledPastThreshold, animated: true)
+        self.animateHeaderView(withOffset: yOffset)
+        self.handleScrollingUpUnderNavBar(withOffset: yOffset)
     }
 
     // MARK: UIStatusBar
@@ -88,7 +85,37 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
         return 40;
     }
 
-    // MARK: Helpers
+    // MARK: View Helpers
+
+    func handleScrollingUpUnderNavBar(withOffset yOffset: CGFloat) {
+        let shouldBringHeaderToFront = yOffset >= 250 && !self.headerIsOnTop
+        let shouldSendHeaderToBack = yOffset < 250 && self.headerIsOnTop
+        if shouldBringHeaderToFront || shouldSendHeaderToBack {
+            self.headerIsOnTop = !self.headerIsOnTop
+            self.swapContainerViewAndScrollViewPositions()
+        }
+    }
+
+    func animateHeaderView(withOffset yOffset: CGFloat) {
+        let userIsPullingDown = yOffset < 0
+        if userIsPullingDown {
+            let affectedAlpha = 1.5 + (yOffset/100.0)
+            self.artistHeaderView.blurAlpha = affectedAlpha
+            self.navigationController?.navigationBar.alpha = affectedAlpha
+            self.navigationController?.setNavigationBarHidden(affectedAlpha <= 0.1, animated: true)
+        } else {
+            self.artistHeaderView.blurAlpha = 1.0
+        }
+    }
+    
+    func swapContainerViewAndScrollViewPositions() {
+        if let scrollViewIndex = self.view.subviews.indexOf(self.scrollView),
+            let artistHeaderViewIndex = self.view.subviews.indexOf(self.artistHeaderView) {
+            self.view.exchangeSubviewAtIndex(scrollViewIndex, withSubviewAtIndex: artistHeaderViewIndex)
+        }
+    }
+
+    // MARK: View Setup
 
     func headerForSection(withTitle title: String) -> UIView {
         let header = UIView()
@@ -105,11 +132,16 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
         header.addSubview(bottomBorder)
         bottomBorder.backgroundColor = UIColor.lightGrayColor()
         bottomBorder.translatesAutoresizingMaskIntoConstraints = false
-        bottomBorder.heightAnchor.constraintEqualToConstant(1.0).active = true
+        bottomBorder.heightAnchor.constraintEqualToConstant(0.5).active = true
         bottomBorder.leadingAnchor.constraintEqualToAnchor(header.leadingAnchor).active = true
         bottomBorder.trailingAnchor.constraintEqualToAnchor(header.trailingAnchor).active = true
         bottomBorder.bottomAnchor.constraintEqualToAnchor(header.bottomAnchor).active = true
-
+        
         return header
+    }
+
+    func updateViews(withArtist artist: SPTArtist) {
+        self.title = artist.name
+        // TODO: update views for passed artist
     }
 }
