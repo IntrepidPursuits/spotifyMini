@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		94BAC76211553E5068AFA487 /* Pods_spotifyMini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1500CA6C361146D1E72F80A /* Pods_spotifyMini.framework */; };
+		B80552091CE4CD3900E20F24 /* AnalysisManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80552081CE4CD3900E20F24 /* AnalysisManager.swift */; };
 		B81F7F9C1CDA99E30092F13D /* ArtistSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81F7F9B1CDA99E30092F13D /* ArtistSearchTableViewController.swift */; };
+		B82462A41CE3C6AF009462F6 /* TrackAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82462A31CE3C6AF009462F6 /* TrackAnalysis.swift */; };
 		B84D372B1CDBB809006313C2 /* PopularTrackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84D372A1CDBB809006313C2 /* PopularTrackTableViewCell.swift */; };
 		B84D372D1CDBB862006313C2 /* PopularTrackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B84D372C1CDBB862006313C2 /* PopularTrackTableViewCell.xib */; };
-
-		B87193251CE2302E00D17885 /* SpotifyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87193241CE2302E00D17885 /* SpotifyError.swift */; };
 		B87193221CE21C1000D17885 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87193211CE21C1000D17885 /* Artist.swift */; };
+		B87193251CE2302E00D17885 /* SpotifyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87193241CE2302E00D17885 /* SpotifyError.swift */; };
 		B8A639991CE1145F00F3D8C4 /* Spotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A639981CE1145F00F3D8C4 /* Spotify.swift */; };
 		B8A7E0CB1CDA4AB300E10028 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A7E0CA1CDA4AB300E10028 /* AppDelegate.swift */; };
 		B8A7E0D01CDA4AB300E10028 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8A7E0CE1CDA4AB300E10028 /* Main.storyboard */; };
@@ -29,11 +30,13 @@
 /* Begin PBXFileReference section */
 		4F361AC5DD7EB886FAB24B84 /* Pods-spotifyMini.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spotifyMini.release.xcconfig"; path = "Pods/Target Support Files/Pods-spotifyMini/Pods-spotifyMini.release.xcconfig"; sourceTree = "<group>"; };
 		57E3AF3B2F75B3AF547C2A49 /* Pods-spotifyMini.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spotifyMini.debug.xcconfig"; path = "Pods/Target Support Files/Pods-spotifyMini/Pods-spotifyMini.debug.xcconfig"; sourceTree = "<group>"; };
+		B80552081CE4CD3900E20F24 /* AnalysisManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalysisManager.swift; sourceTree = "<group>"; };
 		B81F7F9B1CDA99E30092F13D /* ArtistSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistSearchTableViewController.swift; path = ViewControllers/Search/ArtistSearchTableViewController.swift; sourceTree = "<group>"; };
+		B82462A31CE3C6AF009462F6 /* TrackAnalysis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackAnalysis.swift; sourceTree = "<group>"; };
 		B84D372A1CDBB809006313C2 /* PopularTrackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopularTrackTableViewCell.swift; path = ViewControllers/Artist/PopularTrackTableViewCell.swift; sourceTree = "<group>"; };
 		B84D372C1CDBB862006313C2 /* PopularTrackTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PopularTrackTableViewCell.xib; path = ViewControllers/Artist/PopularTrackTableViewCell.xib; sourceTree = "<group>"; };
-		B87193241CE2302E00D17885 /* SpotifyError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyError.swift; sourceTree = "<group>"; };
 		B87193211CE21C1000D17885 /* Artist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Artist.swift; path = Models/Artist.swift; sourceTree = "<group>"; };
+		B87193241CE2302E00D17885 /* SpotifyError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyError.swift; sourceTree = "<group>"; };
 		B8A639981CE1145F00F3D8C4 /* Spotify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Spotify.swift; path = Utilities/Spotify.swift; sourceTree = "<group>"; };
 		B8A7E0C71CDA4AB300E10028 /* spotifyMini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spotifyMini.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8A7E0CA1CDA4AB300E10028 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -85,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				B87193211CE21C1000D17885 /* Artist.swift */,
+				B82462A31CE3C6AF009462F6 /* TrackAnalysis.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -94,6 +98,7 @@
 			children = (
 				B8A639981CE1145F00F3D8C4 /* Spotify.swift */,
 				B87193241CE2302E00D17885 /* SpotifyError.swift */,
+				B80552081CE4CD3900E20F24 /* AnalysisManager.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -292,8 +297,10 @@
 				B8A639991CE1145F00F3D8C4 /* Spotify.swift in Sources */,
 				B8C1D2951CDCDA310093758D /* ArtistHeaderView.swift in Sources */,
 				B81F7F9C1CDA99E30092F13D /* ArtistSearchTableViewController.swift in Sources */,
+				B82462A41CE3C6AF009462F6 /* TrackAnalysis.swift in Sources */,
 				B84D372B1CDBB809006313C2 /* PopularTrackTableViewCell.swift in Sources */,
 				B8A7E0CB1CDA4AB300E10028 /* AppDelegate.swift in Sources */,
+				B80552091CE4CD3900E20F24 /* AnalysisManager.swift in Sources */,
 				B8AC3ACB1CDB804400914FAE /* ArtistViewController.swift in Sources */,
 				B87193221CE21C1000D17885 /* Artist.swift in Sources */,
 			);

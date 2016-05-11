@@ -8,6 +8,7 @@
 
 import Foundation
 import Intrepid
+import Genome
 
 class Spotify {
     static let manager = Spotify()
@@ -24,7 +25,13 @@ class Spotify {
         self.setupAuth()
         self.session = self.sessionFromUserDefaults()
         if let session = self.session where !session.isValid() {
-            self.renewSession{ _ in }
+            self.renewSession{ _ in
+                let testIDs = ["4JpKVNYnVcJ8tuMKjAj50A","2NRANZE9UCmPAS5XVbXL40","24JygzOLM0EmRQeGtFcIcG"]
+                let analysisManager = AnalysisManager.sharedManager
+                analysisManager.fetchAnalysis(forTrackIDs: testIDs) { result in
+                    // FIXME: remove this before you PR, purely for testing
+                }
+            }
         }
     }
 
@@ -53,14 +60,14 @@ class Spotify {
 
     func renewSession(completion: (wasRenewed: Bool) -> Void) {
         if let session = self.session where !session.isValid() {
-                self.auth.renewSession(session, callback: { error, session in
-                    if error != nil {
-                        completion(wasRenewed: false)
-                    } else if let session = session {
-                        self.session = session; print("Session has been refreshed")
-                        completion(wasRenewed: true)
-                    }
-                })
+            self.auth.renewSession(session, callback: { error, session in
+                if error != nil {
+                    completion(wasRenewed: false)
+                } else if let session = session {
+                    self.session = session; print("Session has been refreshed")
+                    completion(wasRenewed: true)
+                }
+            })
         } else {
             if let session = self.session where session.isValid() {
                 completion(wasRenewed: true)
