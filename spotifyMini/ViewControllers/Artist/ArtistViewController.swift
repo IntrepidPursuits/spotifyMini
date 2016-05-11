@@ -12,10 +12,11 @@ import FontAwesomeKit
 
 class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
 
+    var partialArtist: SPTPartialArtist?
     var artist: SPTArtist?
-    var artistHeaderView: ArtistHeaderView = {
-        return NSBundle.mainBundle().loadNibNamed(ArtistHeaderView.ip_nibName, owner: nil, options: nil).first as! ArtistHeaderView
-    }()
+    let spotify = Spotify.manager
+    var topTracks = [SPTTrack]()
+    var artistHeaderView = ArtistHeaderView.ip_fromNib()
     @IBOutlet weak var shufflePlayButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableView: UITableView!
@@ -34,6 +35,7 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
         self.tableView.ip_registerCell(PopularTrackTableViewCell)
         self.tableView.rowHeight = 60
         self.setupArtistHeaderView()
+        self.fetchArtistAndTopTracks()
     }
 
     // MARK: UIScrollViewDelegate
@@ -57,28 +59,32 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
     // MARK: UITableViewDataSource
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5 // FIXME: magic number
+        return self.topTracks.count
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.ip_dequeueCell(indexPath) as PopularTrackTableViewCell
         cell.numberLabel?.text = "\(indexPath.row+1)"
+        cell.track = self.topTracks[indexPath.row]
         return cell
     }
 
     // MARK: UITableViewDelegate
 
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        switch section {
-        case 0:
-            return self.headerForSection(withTitle: "popular") // TODO: enum?
-        default:
-            return nil
-        }
+        return section == 0 ? self.headerForSection(withTitle: "popular") : nil
     }
 
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40;
+    }
+
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let track = self.topTracks[indexPath.row]
+        self.spotify.play(track) { error in
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            self.presentErrorAlert(error)
+        }
     }
 
     // MARK: View Helpers
@@ -122,12 +128,10 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
         self.artistHeaderView.leadingAnchor.constraintEqualToAnchor(self.view.leadingAnchor).active = true
 
         self.artistHeaderView.bottomAnchor.constraintGreaterThanOrEqualToAnchor(self.view.topAnchor, constant: 85).active = true
-
         let bottomToShufflePlayCenterY = self.artistHeaderView.bottomAnchor.constraintEqualToAnchor(self.shufflePlayButton.centerYAnchor)
         bottomToShufflePlayCenterY.priority = 750
         bottomToShufflePlayCenterY.active = true
 
-        self.artistHeaderView.artist = artist
         self.view.sendSubviewToBack(self.artistHeaderView)
     }
 
@@ -152,5 +156,34 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
         bottomBorder.bottomAnchor.constraintEqualToAnchor(header.bottomAnchor).active = true
 
         return header
+    }
+
+    // MARK: Spotify
+
+    func fetchArtistAndTopTracks() {
+        if let partialArtist = self.partialArtist {
+            self.spotify.fetchFullArtist(forPartialArtist: partialArtist) { result in
+                if let artist = result.value {
+                    self.artist = artist
+                    self.artistHeaderView.artist = artist
+                    self.fetchTopTracks()
+                } else if let error = result.error as? SpotifyError {
+                    self.presentErrorAlert(error)
+                }
+            }
+        }
+    }
+
+    func fetchTopTracks() {
+        if let artist = self.artist {
+            self.spotify.fetchTopTracks(forArtist: artist, completion: { result in
+                if let topTracks = result.value {
+                    self.topTracks = topTracks
+                    self.tableView.reloadData()
+                } else if let error = result.error as? SpotifyError{
+                    self.presentErrorAlert(error)
+                }
+            })
+        }
     }
 }

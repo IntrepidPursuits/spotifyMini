@@ -12,7 +12,13 @@ import Intrepid
 
 class PopularTrackTableViewCell : UITableViewCell {
 
-    var track: SPTTrack?
+    var track: SPTTrack? {
+        didSet {
+            if let track = self.track {
+                self.trackTitleLabel.text = track.name
+            }
+        }
+    }
 
     @IBOutlet weak var numberLabel: UILabel!
     @IBOutlet weak var trackTitleLabel: UILabel!
@@ -25,6 +31,21 @@ class PopularTrackTableViewCell : UITableViewCell {
             moreButton.layer.cornerRadius = moreButton.ip_halfHeight
             moreButton.layer.borderWidth = 1.0
             moreButton.layer.borderColor = moreButton.tintColor.CGColor
+        }
+    }
+
+    override func setSelected(selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        if selected {
+                let originalBGColor = self.contentView.backgroundColor
+                UIView.animateWithDuration(0.1, animations: {
+                    self.trackTitleLabel.textColor = UIColor.greenColor()
+                    self.contentView.backgroundColor = originalBGColor?.colorWithAlphaComponent(0.95)
+                    }, completion: { _ in
+                        self.contentView.backgroundColor = originalBGColor
+                })
+        } else {
+            self.trackTitleLabel.textColor = UIColor.whiteColor()
         }
     }
 }

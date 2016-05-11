@@ -8,20 +8,13 @@
 
 import UIKit
 
-class ArtistSearchTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, SPTAuthViewDelegate {
+class ArtistSearchTableViewController: UIViewController, SPTAuthViewDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var logInBarButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
 
-    var session: SPTSession? {
-        didSet {
-            if let session = self.session {
-                self.logInBarButton.enabled = !session.isValid() // FIXME: isValid() is lying
-            }
-        }
-    }
-
+    let spotify = Spotify.manager
     let cellIdentifier = "basicCell"
     var searchResults = [SPTPartialArtist]()
     var fullArtists = [SPTArtist]()
@@ -31,7 +24,6 @@ class ArtistSearchTableViewController: UIViewController, UITableViewDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(recieveSpotifyLogInNotification(_:)), name: AppReturnedFromSpotifyNotification, object: nil)
-        self.checkForExistingSession()
         self.makeNavBarTransparent()
     }
 
@@ -53,7 +45,6 @@ class ArtistSearchTableViewController: UIViewController, UITableViewDelegate, UI
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
-
         let artist = self.searchResults[indexPath.row]
         cell.textLabel?.text = artist.name
         return cell
@@ -72,51 +63,30 @@ class ArtistSearchTableViewController: UIViewController, UITableViewDelegate, UI
     }
 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        SPTSearch.performSearchWithQuery(searchBar.text, queryType: SPTSearchQueryType.QueryTypeArtist, offset: 0, accessToken: nil) { error, listPage in
-            if let error = error {
-                print(error.localizedDescription) //FIXME: throw application error
-                return
-            } else if let listPage = listPage as? SPTListPage,
-                let items = listPage.items as? [SPTPartialArtist] {
-                self.searchResults = items
-                self.tableView.reloadData()
-                let artistURIs = items.map { $0.uri }
-                SPTArtist.artistsWithURIs(artistURIs, session: self.session, callback: { error, object in
-                    if let error = error {
-                        print("fetch SPTArtist error: \(error.localizedDescription)") // FIXME: throw application error
-                    } else if let artists = object as? [SPTArtist] {
-                        self.fullArtists = artists
-                    }
-                })
+        if let text = searchBar.text {
+            searchBar.resignFirstResponder()
+            self.spotify.searchForArtists(withQuery: text) { result in
+                if let partialArtists = result.value {
+                    self.searchResults = partialArtists
+                    self.tableView.reloadData()
+                }
             }
-        }
-    }
-
-    // MARK: SPTSession
-
-    func checkForExistingSession() {
-        if let sessionData = NSUserDefaults.standardUserDefaults().objectForKey(SpotifySessionUserDefaultsKey) as? NSData,
-            let session = NSKeyedUnarchiver.unarchiveObjectWithData(sessionData) as? SPTSession {
-            self.session = session
         }
     }
 
     // MARK: Notification Handling
 
-    func recieveSpotifyLogInNotification(notification:NSNotification) {
+    func recieveSpotifyLogInNotification(notification: NSNotification) {
         self.dismissViewControllerAnimated(false, completion: nil)
-        if let session = notification.userInfo?[SpotifySessionUserDefaultsKey] as? SPTSession {
-            self.session = session
-            self.logInBarButton.enabled = false
-        } else if let error = notification.userInfo?["error"] as? NSError {
-            print(error) // FIXME: handle this error
+        if notification.userInfo?[SpotifyLogInErrorUserInfoKey] != nil {
+            self.presentErrorAlert(.LogInFailed)
         }
     }
 
     // MARK: SPTAuthViewDelegate
 
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didFailToLogin error: NSError!) {
-        // FIXME: make this an application error, handle it
+        self.presentErrorAlert(.LogInFailed)
     }
 
     func authenticationViewControllerDidCancelLogin(authenticationViewController: SPTAuthViewController!) {
@@ -124,24 +94,16 @@ class ArtistSearchTableViewController: UIViewController, UITableViewDelegate, UI
     }
 
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didLoginWithSession session: SPTSession!) {
-        self.session = session
+        self.spotify.session = session
     }
 
-    // MARK: Navigation 
-
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if let cell = sender as? UITableViewCell,
-            let ip = self.tableView.indexPathForCell(cell) {
-            return self.fullArtists.indices.contains(ip.row)
-        }
-        return true
-    }
+    // MARK: Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "toArtistVC",
             let ip = self.tableView.indexPathForSelectedRow,
             let artistVC = segue.destinationViewController as? ArtistViewController {
-            artistVC.artist = self.fullArtists[ip.row]
+            artistVC.partialArtist = self.searchResults[ip.row]
         }
     }
     

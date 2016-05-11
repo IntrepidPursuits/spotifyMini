@@ -11,6 +11,8 @@
 		B81F7F9C1CDA99E30092F13D /* ArtistSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81F7F9B1CDA99E30092F13D /* ArtistSearchTableViewController.swift */; };
 		B84D372B1CDBB809006313C2 /* PopularTrackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84D372A1CDBB809006313C2 /* PopularTrackTableViewCell.swift */; };
 		B84D372D1CDBB862006313C2 /* PopularTrackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B84D372C1CDBB862006313C2 /* PopularTrackTableViewCell.xib */; };
+		B87193251CE2302E00D17885 /* SpotifyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87193241CE2302E00D17885 /* SpotifyError.swift */; };
+		B8A639991CE1145F00F3D8C4 /* Spotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A639981CE1145F00F3D8C4 /* Spotify.swift */; };
 		B8A7E0CB1CDA4AB300E10028 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A7E0CA1CDA4AB300E10028 /* AppDelegate.swift */; };
 		B8A7E0D01CDA4AB300E10028 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8A7E0CE1CDA4AB300E10028 /* Main.storyboard */; };
 		B8A7E0D21CDA4AB300E10028 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8A7E0D11CDA4AB300E10028 /* Assets.xcassets */; };
@@ -28,6 +30,8 @@
 		B81F7F9B1CDA99E30092F13D /* ArtistSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistSearchTableViewController.swift; path = ViewControllers/Search/ArtistSearchTableViewController.swift; sourceTree = "<group>"; };
 		B84D372A1CDBB809006313C2 /* PopularTrackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopularTrackTableViewCell.swift; path = ViewControllers/Artist/PopularTrackTableViewCell.swift; sourceTree = "<group>"; };
 		B84D372C1CDBB862006313C2 /* PopularTrackTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PopularTrackTableViewCell.xib; path = ViewControllers/Artist/PopularTrackTableViewCell.xib; sourceTree = "<group>"; };
+		B87193241CE2302E00D17885 /* SpotifyError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyError.swift; sourceTree = "<group>"; };
+		B8A639981CE1145F00F3D8C4 /* Spotify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Spotify.swift; path = Utilities/Spotify.swift; sourceTree = "<group>"; };
 		B8A7E0C71CDA4AB300E10028 /* spotifyMini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spotifyMini.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8A7E0CA1CDA4AB300E10028 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B8A7E0CF1CDA4AB300E10028 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -65,6 +69,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B8A6399A1CE1146600F3D8C4 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B8A639981CE1145F00F3D8C4 /* Spotify.swift */,
+				B87193241CE2302E00D17885 /* SpotifyError.swift */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		B8A7E0BE1CDA4AB300E10028 = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				B8A7E0CA1CDA4AB300E10028 /* AppDelegate.swift */,
+				B8A6399A1CE1146600F3D8C4 /* Utilities */,
 				B8C1D2991CDCDA8F0093758D /* ViewControllers */,
 				B8A7E0CE1CDA4AB300E10028 /* Main.storyboard */,
 				B8AC3ACC1CDB818300914FAE /* lobsterDog.jpg */,
@@ -262,6 +276,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B87193251CE2302E00D17885 /* SpotifyError.swift in Sources */,
+				B8A639991CE1145F00F3D8C4 /* Spotify.swift in Sources */,
 				B8C1D2951CDCDA310093758D /* ArtistHeaderView.swift in Sources */,
 				B81F7F9C1CDA99E30092F13D /* ArtistSearchTableViewController.swift in Sources */,
 				B84D372B1CDBB809006313C2 /* PopularTrackTableViewCell.swift in Sources */,
