@@ -23,6 +23,7 @@ class Spotify {
     init() {
         self.setupAuth()
         self.session = self.sessionFromUserDefaults()
+        self.checkSessionValidityAndRenewIfNecessary()
     }
 
     // MARK: SPTAuth
@@ -31,6 +32,8 @@ class Spotify {
         let auth = SPTAuth.defaultInstance()
         auth.clientID = self.clientID
         auth.redirectURL = self.callbackURL
+        auth.tokenRefreshURL = NSURL(string: "https://salty-temple-97111.herokuapp.com/refresh")
+        auth.tokenSwapURL = NSURL(string: "https://salty-temple-97111.herokuapp.com/swap")
         auth.sessionUserDefaultsKey = SpotifySessionUserDefaultsKey
         auth.requestedScopes = [SPTAuthStreamingScope]
     }
@@ -44,6 +47,18 @@ class Spotify {
             return session
         }
         return nil
+    }
+
+    func checkSessionValidityAndRenewIfNecessary() {
+        if let session = self.session where !session.isValid() {
+            self.auth.renewSession(session, callback: { error, session in
+                if let error = error {
+                    print(error) // FIXME: throw application error, handle somehow?
+                } else if let session = session {
+                    self.session = session; print("Session has been refreshed")
+                }
+            })
+        }
     }
 
     // MARK: SPTSearch
@@ -66,7 +81,7 @@ class Spotify {
         if let session = self.session where session.isValid() {
             SPTArtist.artistWithURI(partialArtist.uri, session: self.session) { error, artist in
                 if error != nil {
-                    completion(.Failure(SpotifyError.RequestFailed)) 
+                    completion(.Failure(SpotifyError.RequestFailed))
                 } else if let artist = artist as? SPTArtist {
                     completion(.Success(artist))
                 }
