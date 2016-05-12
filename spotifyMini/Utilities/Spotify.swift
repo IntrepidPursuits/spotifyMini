@@ -23,6 +23,9 @@ class Spotify {
     init() {
         self.setupAuth()
         self.session = self.sessionFromUserDefaults()
+        if let session = self.session where !session.isValid() {
+            self.renewSession{ _ in }
+        }
     }
 
     // MARK: SPTAuth
@@ -31,6 +34,8 @@ class Spotify {
         let auth = SPTAuth.defaultInstance()
         auth.clientID = self.clientID
         auth.redirectURL = self.callbackURL
+        auth.tokenRefreshURL = NSURL(string: "https://salty-temple-97111.herokuapp.com/refresh")
+        auth.tokenSwapURL = NSURL(string: "https://salty-temple-97111.herokuapp.com/swap")
         auth.sessionUserDefaultsKey = SpotifySessionUserDefaultsKey
         auth.requestedScopes = [SPTAuthStreamingScope]
     }
@@ -44,6 +49,25 @@ class Spotify {
             return session
         }
         return nil
+    }
+
+    func renewSession(completion: (wasRenewed: Bool) -> Void) {
+        if let session = self.session where !session.isValid() {
+                self.auth.renewSession(session, callback: { error, session in
+                    if error != nil {
+                        completion(wasRenewed: false)
+                    } else if let session = session {
+                        self.session = session; print("Session has been refreshed")
+                        completion(wasRenewed: true)
+                    }
+                })
+        } else {
+            if let session = self.session where session.isValid() {
+                completion(wasRenewed: true)
+            } else {
+                completion(wasRenewed: false)
+            }
+        }
     }
 
     // MARK: SPTSearch
@@ -66,13 +90,19 @@ class Spotify {
         if let session = self.session where session.isValid() {
             SPTArtist.artistWithURI(partialArtist.uri, session: self.session) { error, artist in
                 if error != nil {
-                    completion(.Failure(SpotifyError.RequestFailed)) 
+                    completion(.Failure(SpotifyError.RequestFailed))
                 } else if let artist = artist as? SPTArtist {
                     completion(.Success(artist))
                 }
             }
         } else {
-            completion(.Failure(SpotifyError.InvalidSession))
+            self.renewSession() { wasRenewed in
+                if wasRenewed {
+                    self.fetchFullArtist(forPartialArtist: partialArtist, completion: completion)
+                } else {
+                    completion(.Failure(SpotifyError.InvalidSession))
+                }
+            }
         }
     }
 
@@ -88,7 +118,13 @@ class Spotify {
                 }
             }
         } else {
-            completion(.Failure(SpotifyError.InvalidSession))
+            self.renewSession() { wasRenewed in
+                if wasRenewed {
+                    self.fetchTopTracks(forArtist: artist, completion: completion)
+                } else {
+                    completion(.Failure(SpotifyError.InvalidSession))
+                }
+            }
         }
     }
 
@@ -112,8 +148,13 @@ class Spotify {
                 }
             }
         } else {
-            errorCallback(.InvalidSession)
+            self.renewSession() { wasRenewed in
+                if wasRenewed {
+                    self.play(track, errorCallback: errorCallback)
+                } else {
+                    errorCallback(.InvalidSession)
+                }
+            }
         }
     }
-    
 }
