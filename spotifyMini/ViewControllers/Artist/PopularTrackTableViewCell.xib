@@ -31,13 +31,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="St. Justice" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lPQ-xe-6Da">
-                        <rect key="frame" x="95" y="11" width="75" height="18"/>
+                        <rect key="frame" x="95" y="11" width="485" height="18"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FhI-n0-tDa" userLabel="More Button">
-                        <rect key="frame" x="584" y="13" width="34" height="34"/>
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FhI-n0-tDa" userLabel="More Button">
+                        <rect key="frame" x="588" y="15" width="30" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="FhI-n0-tDa" secondAttribute="height" multiplier="1:1" id="sKl-Pv-b3p"/>
                         </constraints>
@@ -54,6 +54,7 @@
                     <constraint firstItem="N9L-rw-kHh" firstAttribute="width" secondItem="4Ui-3h-z9E" secondAttribute="width" multiplier="0.15" id="i8d-Ib-Wh8"/>
                     <constraint firstItem="N9L-rw-kHh" firstAttribute="centerY" secondItem="4Ui-3h-z9E" secondAttribute="centerY" id="js4-t1-sDw"/>
                     <constraint firstItem="FhI-n0-tDa" firstAttribute="centerY" secondItem="4Ui-3h-z9E" secondAttribute="centerY" id="k2P-2X-2L2"/>
+                    <constraint firstItem="FhI-n0-tDa" firstAttribute="leading" secondItem="lPQ-xe-6Da" secondAttribute="trailing" constant="8" id="kZU-Ex-ms9"/>
                     <constraint firstItem="Dj9-mn-8xC" firstAttribute="top" secondItem="N9L-rw-kHh" secondAttribute="centerY" constant="2" id="reD-6P-LtX"/>
                     <constraint firstItem="N9L-rw-kHh" firstAttribute="leading" secondItem="4Ui-3h-z9E" secondAttribute="leading" id="xNW-DW-zqh"/>
                 </constraints>

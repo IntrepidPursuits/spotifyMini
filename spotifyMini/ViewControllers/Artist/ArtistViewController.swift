@@ -10,6 +10,9 @@ import Foundation
 import Intrepid
 import FontAwesomeKit
 
+let ArtistHeaderHeightSmall: CGFloat = 275.0
+let ArtistHeaderHeightLarge: CGFloat = 325.0
+
 class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
 
     var partialArtist: SPTPartialArtist?
@@ -26,8 +29,8 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
             self.moreBarButton.image = FAKIonIcons.iosMoreIconWithSize(iconSize).imageWithSize(CGSizeMake(iconSize, iconSize))
         }
     }
-
     var headerIsOnTop = false
+    @IBOutlet weak var clearPlaceholderHeightConstraint: NSLayoutConstraint!
 
     // MARK: View Life Cycle
 
@@ -90,11 +93,16 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
     // MARK: View Helpers
 
     func handleScrollingUpUnderNavBar(withOffset yOffset: CGFloat) {
-        let shouldBringHeaderToFront = yOffset >= 250 && !self.headerIsOnTop
-        let shouldSendHeaderToBack = yOffset < 250 && self.headerIsOnTop
-        if shouldBringHeaderToFront || shouldSendHeaderToBack {
-            self.headerIsOnTop = !self.headerIsOnTop
-            self.swapContainerViewAndScrollViewPositions()
+        if let navBar = self.navigationController?.navigationBar {
+            let navBarBottom = self.topLayoutGuide.length + navBar.ip_height
+            let minimumHeaderHeight = navBarBottom + self.shufflePlayButton.ip_halfHeight
+
+            let shouldBringHeaderToFront = yOffset >= minimumHeaderHeight && !self.headerIsOnTop
+            let shouldSendHeaderToBack = yOffset < minimumHeaderHeight && self.headerIsOnTop
+            if shouldBringHeaderToFront || shouldSendHeaderToBack {
+                self.headerIsOnTop = !self.headerIsOnTop
+                self.swapContainerViewAndScrollViewPositions()
+            }
         }
     }
 
@@ -103,7 +111,7 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
         if userIsPullingDown {
             let affectedAlpha = 1.5 + (yOffset/100.0)
             self.artistHeaderView.blurAlpha = affectedAlpha
-            self.artistHeaderView.blurHeightConstraint.constant = 325 - yOffset
+            self.artistHeaderView.blurHeightConstraint.constant = self.artistHeaderView.headerHeight - yOffset
             self.navigationController?.navigationBar.alpha = affectedAlpha
             self.navigationController?.setNavigationBarHidden(affectedAlpha <= 0.1, animated: true)
         } else {
@@ -131,6 +139,15 @@ class ArtistViewController: UIViewController, UIScrollViewDelegate, UITableViewD
         let bottomToShufflePlayCenterY = self.artistHeaderView.bottomAnchor.constraintEqualToAnchor(self.shufflePlayButton.centerYAnchor)
         bottomToShufflePlayCenterY.priority = 750
         bottomToShufflePlayCenterY.active = true
+
+        let iPhone5orLower = self.view.ip_height < 600.0
+        if iPhone5orLower {
+            self.artistHeaderView.headerHeight = ArtistHeaderHeightSmall
+            self.clearPlaceholderHeightConstraint.constant = ArtistHeaderHeightSmall
+        } else {
+            self.artistHeaderView.headerHeight = ArtistHeaderHeightLarge
+            self.clearPlaceholderHeightConstraint.constant = ArtistHeaderHeightLarge
+        }
 
         self.view.sendSubviewToBack(self.artistHeaderView)
     }

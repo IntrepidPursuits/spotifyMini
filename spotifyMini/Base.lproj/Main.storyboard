@@ -203,11 +203,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="21I-mb-bzS">
                         <barButtonItem key="backBarButtonItem" title=" " id="trj-H0-vST"/>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="Nz1-Pe-JK8">
+                        <barButtonItem key="rightBarButtonItem" id="Nz1-Pe-JK8">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="clearPlaceholderHeightConstraint" destination="7kS-tf-GRO" id="yl9-TN-X5N"/>
                         <outlet property="moreBarButton" destination="Nz1-Pe-JK8" id="Qbh-Xe-IAT"/>
                         <outlet property="scrollView" destination="CUP-dL-0fH" id="Wq9-O0-wTU"/>
                         <outlet property="shufflePlayButton" destination="6C6-b4-HdE" id="RrW-gU-guc"/>

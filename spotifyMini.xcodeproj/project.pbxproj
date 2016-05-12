@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6E12E7B294F7B323503292A9 /* Pods_spotifyMini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA853E5F0B76BCECCDF8948 /* Pods_spotifyMini.framework */; };
+		94BAC76211553E5068AFA487 /* Pods_spotifyMini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1500CA6C361146D1E72F80A /* Pods_spotifyMini.framework */; };
 		B81F7F9C1CDA99E30092F13D /* ArtistSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81F7F9B1CDA99E30092F13D /* ArtistSearchTableViewController.swift */; };
 		B84D372B1CDBB809006313C2 /* PopularTrackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84D372A1CDBB809006313C2 /* PopularTrackTableViewCell.swift */; };
 		B84D372D1CDBB862006313C2 /* PopularTrackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B84D372C1CDBB862006313C2 /* PopularTrackTableViewCell.xib */; };
@@ -25,8 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		448EB3A5B3A48CB8C155E91F /* Pods-spotifyMini.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spotifyMini.debug.xcconfig"; path = "Pods/Target Support Files/Pods-spotifyMini/Pods-spotifyMini.debug.xcconfig"; sourceTree = "<group>"; };
-		AAA853E5F0B76BCECCDF8948 /* Pods_spotifyMini.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spotifyMini.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F361AC5DD7EB886FAB24B84 /* Pods-spotifyMini.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spotifyMini.release.xcconfig"; path = "Pods/Target Support Files/Pods-spotifyMini/Pods-spotifyMini.release.xcconfig"; sourceTree = "<group>"; };
+		57E3AF3B2F75B3AF547C2A49 /* Pods-spotifyMini.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spotifyMini.debug.xcconfig"; path = "Pods/Target Support Files/Pods-spotifyMini/Pods-spotifyMini.debug.xcconfig"; sourceTree = "<group>"; };
 		B81F7F9B1CDA99E30092F13D /* ArtistSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistSearchTableViewController.swift; path = ViewControllers/Search/ArtistSearchTableViewController.swift; sourceTree = "<group>"; };
 		B84D372A1CDBB809006313C2 /* PopularTrackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopularTrackTableViewCell.swift; path = ViewControllers/Artist/PopularTrackTableViewCell.swift; sourceTree = "<group>"; };
 		B84D372C1CDBB862006313C2 /* PopularTrackTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PopularTrackTableViewCell.xib; path = ViewControllers/Artist/PopularTrackTableViewCell.xib; sourceTree = "<group>"; };
@@ -44,7 +44,7 @@
 		B8AC3ACC1CDB818300914FAE /* lobsterDog.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lobsterDog.jpg; sourceTree = "<group>"; };
 		B8C1D2941CDCDA310093758D /* ArtistHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistHeaderView.swift; path = ViewControllers/Artist/ArtistHeaderView.swift; sourceTree = "<group>"; };
 		B8C1D2961CDCDA640093758D /* ArtistHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ArtistHeaderView.xib; path = ViewControllers/Artist/ArtistHeaderView.xib; sourceTree = "<group>"; };
-		F9AB29C1D96BE8C9BF741890 /* Pods-spotifyMini.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spotifyMini.release.xcconfig"; path = "Pods/Target Support Files/Pods-spotifyMini/Pods-spotifyMini.release.xcconfig"; sourceTree = "<group>"; };
+		E1500CA6C361146D1E72F80A /* Pods_spotifyMini.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spotifyMini.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,19 +52,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E12E7B294F7B323503292A9 /* Pods_spotifyMini.framework in Frameworks */,
 				B8A7E0E31CDA51AE00E10028 /* Spotify.framework in Frameworks */,
+				94BAC76211553E5068AFA487 /* Pods_spotifyMini.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02E7EB571D334324167FCC51 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				57E3AF3B2F75B3AF547C2A49 /* Pods-spotifyMini.debug.xcconfig */,
+				4F361AC5DD7EB886FAB24B84 /* Pods-spotifyMini.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		A7DCE2BFA6AA44BCA361CDD8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				B8A7E0E21CDA51AE00E10028 /* Spotify.framework */,
-				AAA853E5F0B76BCECCDF8948 /* Pods_spotifyMini.framework */,
+				E1500CA6C361146D1E72F80A /* Pods_spotifyMini.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -83,8 +92,8 @@
 			children = (
 				B8A7E0C91CDA4AB300E10028 /* spotifyMini */,
 				B8A7E0C81CDA4AB300E10028 /* Products */,
-				B8C3BBC5B9A10EC8FE03EB9F /* Pods */,
 				A7DCE2BFA6AA44BCA361CDD8 /* Frameworks */,
+				02E7EB571D334324167FCC51 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -133,15 +142,6 @@
 			name = ViewControllers;
 			sourceTree = "<group>";
 		};
-		B8C3BBC5B9A10EC8FE03EB9F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				448EB3A5B3A48CB8C155E91F /* Pods-spotifyMini.debug.xcconfig */,
-				F9AB29C1D96BE8C9BF741890 /* Pods-spotifyMini.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		B8DDDE871CDD25D8004998E4 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,12 +157,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B8A7E0D91CDA4AB300E10028 /* Build configuration list for PBXNativeTarget "spotifyMini" */;
 			buildPhases = (
-				E0E56C6402CA2763F99D2ABD /* Check Pods Manifest.lock */,
+				5D705ACAD52B684113BFA7BA /* 📦 Check Pods Manifest.lock */,
 				B8A7E0C31CDA4AB300E10028 /* Sources */,
 				B8A7E0C41CDA4AB300E10028 /* Frameworks */,
 				B8A7E0C51CDA4AB300E10028 /* Resources */,
-				24ACE983D9684A80E8E28ECC /* Embed Pods Frameworks */,
-				6964F5921E53D0B80BB25E66 /* Copy Pods Resources */,
+				8AA0F6B3458BDB89933C08AE /* 📦 Embed Pods Frameworks */,
+				78A955895E43AB9109CC74E3 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -224,29 +224,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		24ACE983D9684A80E8E28ECC /* Embed Pods Frameworks */ = {
+		5D705ACAD52B684113BFA7BA /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-spotifyMini/Pods-spotifyMini-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		6964F5921E53D0B80BB25E66 /* Copy Pods Resources */ = {
+		78A955895E43AB9109CC74E3 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -254,19 +254,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-spotifyMini/Pods-spotifyMini-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E0E56C6402CA2763F99D2ABD /* Check Pods Manifest.lock */ = {
+		8AA0F6B3458BDB89933C08AE /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-spotifyMini/Pods-spotifyMini-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -393,7 +393,7 @@
 		};
 		B8A7E0DA1CDA4AB300E10028 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 448EB3A5B3A48CB8C155E91F /* Pods-spotifyMini.debug.xcconfig */;
+			baseConfigurationReference = 57E3AF3B2F75B3AF547C2A49 /* Pods-spotifyMini.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -424,7 +424,7 @@
 		};
 		B8A7E0DB1CDA4AB300E10028 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F9AB29C1D96BE8C9BF741890 /* Pods-spotifyMini.release.xcconfig */;
+			baseConfigurationReference = 4F361AC5DD7EB886FAB24B84 /* Pods-spotifyMini.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
