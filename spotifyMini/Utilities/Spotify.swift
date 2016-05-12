@@ -10,6 +10,8 @@ import Foundation
 import Intrepid
 import Genome
 
+let SpotifyAPIBaseURL = "https://api.spotify.com/v1/"
+
 class Spotify {
     static let manager = Spotify()
 
@@ -25,13 +27,7 @@ class Spotify {
         self.setupAuth()
         self.session = self.sessionFromUserDefaults()
         if let session = self.session where !session.isValid() {
-            self.renewSession{ _ in
-                let testIDs = ["4JpKVNYnVcJ8tuMKjAj50A","2NRANZE9UCmPAS5XVbXL40","24JygzOLM0EmRQeGtFcIcG"]
-                let analysisManager = AnalysisManager.sharedManager
-                analysisManager.fetchAnalysis(forTrackIDs: testIDs) { result in
-                    // FIXME: remove this before you PR, purely for testing
-                }
-            }
+            self.renewSession{ _ in }
         }
     }
 
@@ -64,7 +60,7 @@ class Spotify {
                 if error != nil {
                     completion(wasRenewed: false)
                 } else if let session = session {
-                    self.session = session; print("Session has been refreshed")
+                    self.session = session
                     completion(wasRenewed: true)
                 }
             })
@@ -162,6 +158,139 @@ class Spotify {
                     errorCallback(.InvalidSession)
                 }
             }
+        }
+    }
+
+    // MARK: SPTPlaylist
+
+    // TODO: remove this? not sure if im gonna use it, so...
+    func fetchFeaturedPlaylists(completion: (Result<[SPTPlaylistSnapshot]>) -> Void) {
+        if let session = self.session where session.isValid() {
+            SPTBrowse.requestFeaturedPlaylistsForCountry("US", limit: 20, offset: 0, locale: nil, timestamp: nil, accessToken: session.accessToken) { error, responseObject in
+                if error != nil {
+                    completion(.Failure(SpotifyError.RequestFailed))
+                } else if let listPage = responseObject as? SPTFeaturedPlaylistList,
+                    let items = listPage.items as? [SPTPartialPlaylist] {
+
+                    let playlistURIs = items.map { $0.uri }
+                    SPTPlaylistSnapshot.playlistsWithURIs(playlistURIs, session: session) { error, responseObject in
+                        if let playlists = responseObject as? [SPTPlaylistSnapshot] {
+                            completion(.Success(playlists))
+                        } else {
+                            completion(.Failure(SpotifyError.RequestFailed))
+                        }
+                    }
+
+                }
+            }
+        } else {
+            self.renewSession() { wasRenewed in
+                if wasRenewed {
+                    self.fetchFeaturedPlaylists(completion)
+                } else {
+                    completion(.Failure(SpotifyError.InvalidSession))
+                }
+            }
+        }
+    }
+
+    // MARK: Fetch Recommended Tracks By Genre
+
+    func fetchRecommendedTracks(forGenre genre:String, completion: (Result<[SPTPartialTrack]>) -> Void) {
+        let urlString = "\(SpotifyAPIBaseURL)recommendations?limit=100&market=US&seed_genres=\(genre)"
+        if let request = self.authenticatedSpotifyRequest(forURL: urlString) {
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler: { data, response, error in
+                if error != nil {
+                    completion(.Failure(SpotifyError.RequestFailed))
+                } else if let data = data {
+                    completion(self.extractTracks(fromData: data))
+                }
+            })
+            task.resume()
+        }
+    }
+
+    // TODO: determine if we will actually use this.. if so refactor this and fetchRecommendedTracksForGenre for less repitition
+    func fetchRecommendedTracks(withUpToFiveGenres genres:[String], completion: (Result<[SPTPartialTrack]>) -> Void) {
+        if genres.count == 0 || genres.count > 5 {
+            return // ??? unsure of what else to do with this
+        }
+        let seedParam = genres.joinWithSeparator(",")
+        let urlString = "\(SpotifyAPIBaseURL)recommendations?limit=100&market=US&seed_genres=\(seedParam)"
+        if let request = self.authenticatedSpotifyRequest(forURL: urlString) {
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler: { data, response, error in
+                if error != nil {
+                    completion(.Failure(SpotifyError.RequestFailed))
+                } else if let data = data {
+                    completion(self.extractTracks(fromData: data))
+                }
+            })
+            task.resume()
+        }
+    }
+
+    // MARK: Fetch Genre Seeds
+
+    func fetchAvailableGenreSeeds(completion: (Result<[String]>) -> Void) {
+        let urlString = "\(SpotifyAPIBaseURL)recommendations/available-genre-seeds"
+        if let request = self.authenticatedSpotifyRequest(forURL: urlString) {
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler: { data, response, error in
+                if error != nil {
+                    completion(.Failure(SpotifyError.RequestFailed))
+                } else if let data = data {
+                    do {
+                        if let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject],
+                            let genres = json["genres"] as? [String] {
+                            completion(.Success(genres))
+                        } else {
+                            completion(.Failure(SpotifyError.RequestFailed))
+                        }
+                    } catch {
+                        completion(.Failure(SpotifyError.RequestFailed))
+                    }
+                }
+            })
+            task.resume()
+        } else {
+            self.renewSession { wasRenewed in
+                if wasRenewed {
+                    self.fetchAvailableGenreSeeds(completion)
+                } else {
+                    completion(.Failure(SpotifyError.InvalidSession))
+                }
+            }
+        }
+    }
+
+    // MARK: Request Helpers
+
+    func authenticatedSpotifyRequest(forURL urlString: String) -> NSMutableURLRequest? {
+        if let session = self.session where session.isValid(),
+            let token = session.accessToken,
+            let url = NSURL(string: urlString) {
+            let authorizationHeaderValue = "Bearer \(token)"
+            let mutableRequest = NSMutableURLRequest(URL: url)
+            mutableRequest.setValue(authorizationHeaderValue, forHTTPHeaderField: "Authorization")
+            return mutableRequest
+        }
+        return nil
+    }
+
+    func extractTracks(fromData data: NSData) -> Result<[SPTPartialTrack]> {
+        do {
+            if let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject],
+                let rawTracks = json["tracks"] as? [[String:AnyObject]] {
+                var tracks = [SPTPartialTrack]()
+                for rawTrack in rawTracks {
+                    let track = try SPTPartialTrack(decodedJSONObject: rawTrack)
+                    tracks.append(track)
+                }
+                return .Success(tracks)
+            } else {
+                return .Failure(SpotifyError.RequestFailed)
+            }
+        } catch {
+            return .Failure(SpotifyError.RequestFailed)
         }
     }
 }
