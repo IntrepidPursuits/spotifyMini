@@ -8,6 +8,7 @@
 
 import Foundation
 import Kingfisher
+import MBProgressHUD
 
 class ArtistHeaderView : UIView {
 
@@ -29,15 +30,24 @@ class ArtistHeaderView : UIView {
     }
     @IBOutlet weak var blurHeightConstraint: NSLayoutConstraint!
 
-    var artist: SPTArtist? {
+    var artist: Artist? {
         didSet {
             if let artist = self.artist {
                 nameLabel.text = artist.name
-                if let imageURL = artist.largestImage?.imageURL {
-                    profileImageView.kf_setImageWithURL(imageURL, placeholderImage: nil, optionsInfo: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
+                if let imageURL = artist.imageURL {
+
+                    let hud = MBProgressHUD.showHUDAddedTo(self.profileImageView, animated: true)
+                    hud.mode = .AnnularDeterminate
+                    hud.color = UIColor.clearColor()
+                    let progress: DownloadProgressBlock = { receivedSize, totalSize in
+                        hud.progress = Float(receivedSize)/Float(totalSize)
+                    }
+
+                    self.blurImageView.kf_setImageWithURL(imageURL, placeholderImage: nil, optionsInfo: nil, progressBlock: progress) { image, error, cacheType, imageURL in
+                        self.profileImageView.image = image
                         self.headerImageView.image = image
-                        self.blurImageView.image = image
-                    })
+                        hud.hide(false)
+                    }
                 }
             }
         }

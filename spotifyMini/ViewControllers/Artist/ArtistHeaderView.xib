@@ -13,14 +13,16 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="325"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lobsterDog.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Nuk-XY-L8L">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nuk-XY-L8L">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="325"/>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                 </imageView>
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Goh-BI-jHR">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="325"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lobsterDog.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="WiA-qF-OdJ">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WiA-qF-OdJ">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="325"/>
+                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         </imageView>
                         <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J9O-bO-Cd1">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="325"/>
@@ -28,8 +30,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="325"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lobster Dog" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G9Z-Ro-hqa">
-                                        <rect key="frame" x="233" y="212" width="134" height="29"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G9Z-Ro-hqa">
+                                        <rect key="frame" x="300" y="241" width="0.0" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -51,12 +53,18 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lobsterDog.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="AXS-SC-jEQ">
-                                        <rect key="frame" x="240" y="84" width="120" height="120"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AXS-SC-jEQ">
+                                        <rect key="frame" x="240" y="77" width="120" height="120"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="AXS-SC-jEQ" secondAttribute="height" multiplier="1:1" id="P3k-1g-nc7"/>
-                                            <constraint firstAttribute="height" constant="120" id="xfE-uw-99d"/>
+                                            <constraint firstAttribute="height" constant="120" id="vT5-Fw-3A1"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="60"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </imageView>
                                 </subviews>
                                 <constraints>
@@ -64,6 +72,7 @@
                                     <constraint firstItem="AXS-SC-jEQ" firstAttribute="bottom" secondItem="G9Z-Ro-hqa" secondAttribute="top" constant="-8" id="CDN-e6-yVR"/>
                                     <constraint firstAttribute="bottom" secondItem="G9Z-Ro-hqa" secondAttribute="bottom" constant="100" id="CJe-UV-Ios"/>
                                     <constraint firstItem="DFj-c1-Wtp" firstAttribute="centerX" secondItem="SBd-gI-7W8" secondAttribute="centerX" id="Cfl-xw-vsb"/>
+                                    <constraint firstItem="DFj-c1-Wtp" firstAttribute="top" secondItem="AXS-SC-jEQ" secondAttribute="bottom" constant="52" id="QFt-Dg-Hvt"/>
                                     <constraint firstItem="G9Z-Ro-hqa" firstAttribute="leading" secondItem="AXS-SC-jEQ" secondAttribute="trailing" id="UjH-C0-51i"/>
                                     <constraint firstAttribute="bottom" secondItem="LIv-rB-4ux" secondAttribute="bottom" constant="32" id="W2O-E7-SJh"/>
                                     <constraint firstItem="AXS-SC-jEQ" firstAttribute="width" secondItem="SBd-gI-7W8" secondAttribute="width" multiplier="0.25" id="fvG-3W-ZUM"/>
@@ -75,6 +84,7 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="CDN-e6-yVR"/>
                                         <exclude reference="fvG-3W-ZUM"/>
                                         <exclude reference="tWx-Y6-M7b"/>
                                         <exclude reference="CJe-UV-Ios"/>
@@ -123,7 +133,4 @@
             <point key="canvasLocation" x="626" y="328.5"/>
         </view>
     </objects>
-    <resources>
-        <image name="lobsterDog.jpg" width="184" height="184"/>
-    </resources>
 </document>

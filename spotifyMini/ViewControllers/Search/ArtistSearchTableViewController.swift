@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class ArtistSearchTableViewController: UIViewController, SPTAuthViewDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
@@ -16,8 +17,7 @@ class ArtistSearchTableViewController: UIViewController, SPTAuthViewDelegate, UI
 
     let spotify = Spotify.manager
     let cellIdentifier = "basicCell"
-    var searchResults = [SPTPartialArtist]()
-    var fullArtists = [SPTArtist]()
+    var searchResults = [Artist]()
 
     // MARK: View Life Cycle
 
@@ -63,10 +63,15 @@ class ArtistSearchTableViewController: UIViewController, SPTAuthViewDelegate, UI
     }
 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+
         if let text = searchBar.text {
             searchBar.resignFirstResponder()
+            self.searchResults.removeAll()
+            self.tableView.reloadData()
+            MBProgressHUD.showHUDAddedTo(self.tableView, animated: true).labelText = "Searching..."
             self.spotify.searchForArtists(withQuery: text) { result in
                 if let partialArtists = result.value {
+                    MBProgressHUD.hideHUDForView(self.tableView, animated: false)
                     self.searchResults = partialArtists
                     self.tableView.reloadData()
                 }
@@ -103,7 +108,7 @@ class ArtistSearchTableViewController: UIViewController, SPTAuthViewDelegate, UI
         if segue.identifier == "toArtistVC",
             let ip = self.tableView.indexPathForSelectedRow,
             let artistVC = segue.destinationViewController as? ArtistViewController {
-            artistVC.partialArtist = self.searchResults[ip.row]
+            artistVC.artist = self.searchResults[ip.row]
         }
     }
     
