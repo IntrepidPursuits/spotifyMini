@@ -161,62 +161,10 @@ class Spotify {
         }
     }
 
-    // MARK: SPTPlaylist
-
-    // TODO: remove this? not sure if im gonna use it, so...
-    func fetchFeaturedPlaylists(completion: (Result<[SPTPlaylistSnapshot]>) -> Void) {
-        if let session = self.session where session.isValid() {
-            SPTBrowse.requestFeaturedPlaylistsForCountry("US", limit: 20, offset: 0, locale: nil, timestamp: nil, accessToken: session.accessToken) { error, responseObject in
-                if error != nil {
-                    completion(.Failure(SpotifyError.RequestFailed))
-                } else if let listPage = responseObject as? SPTFeaturedPlaylistList,
-                    let items = listPage.items as? [SPTPartialPlaylist] {
-
-                    let playlistURIs = items.map { $0.uri }
-                    SPTPlaylistSnapshot.playlistsWithURIs(playlistURIs, session: session) { error, responseObject in
-                        if let playlists = responseObject as? [SPTPlaylistSnapshot] {
-                            completion(.Success(playlists))
-                        } else {
-                            completion(.Failure(SpotifyError.RequestFailed))
-                        }
-                    }
-
-                }
-            }
-        } else {
-            self.renewSession() { wasRenewed in
-                if wasRenewed {
-                    self.fetchFeaturedPlaylists(completion)
-                } else {
-                    completion(.Failure(SpotifyError.InvalidSession))
-                }
-            }
-        }
-    }
-
     // MARK: Fetch Recommended Tracks By Genre
 
     func fetchRecommendedTracks(forGenre genre:String, completion: (Result<[SPTPartialTrack]>) -> Void) {
         let urlString = "\(SpotifyAPIBaseURL)recommendations?limit=100&market=US&seed_genres=\(genre)"
-        if let request = self.authenticatedSpotifyRequest(forURL: urlString) {
-            let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler: { data, response, error in
-                if error != nil {
-                    completion(.Failure(SpotifyError.RequestFailed))
-                } else if let data = data {
-                    completion(self.extractTracks(fromData: data))
-                }
-            })
-            task.resume()
-        }
-    }
-
-    // TODO: determine if we will actually use this.. if so refactor this and fetchRecommendedTracksForGenre for less repitition
-    func fetchRecommendedTracks(withUpToFiveGenres genres:[String], completion: (Result<[SPTPartialTrack]>) -> Void) {
-        if genres.count == 0 || genres.count > 5 {
-            return // ??? unsure of what else to do with this
-        }
-        let seedParam = genres.joinWithSeparator(",")
-        let urlString = "\(SpotifyAPIBaseURL)recommendations?limit=100&market=US&seed_genres=\(seedParam)"
         if let request = self.authenticatedSpotifyRequest(forURL: urlString) {
             let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler: { data, response, error in
                 if error != nil {
