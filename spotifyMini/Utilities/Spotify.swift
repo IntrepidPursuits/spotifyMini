@@ -210,9 +210,34 @@ class Spotify {
         }
     }
 
+    // MARK: Fetch Analysis For IDs
+
+    func fetchAnalysis(forTrackIDs trackIDs:[String], completion: (Result<[TrackAnalysis]>) -> Void) {
+        let commaSeparatedIDs = trackIDs.joinWithSeparator(",")
+        let urlString = "\(SpotifyAPIBaseURL)audio-features?ids=\(commaSeparatedIDs)"
+        if let request = self.authenticatedSpotifyRequest(forURL: urlString) {
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler: { data, response, error in
+                if error != nil {
+                    completion(.Failure(SpotifyError.RequestFailed))
+                } else if let data = data {
+                    completion(self.createTrackAnalyses(fromData: data))
+                }
+            })
+            task.resume()
+        } else {
+            self.renewSession { wasRenewed in
+                if wasRenewed {
+                    self.fetchAnalysis(forTrackIDs: trackIDs, completion: completion)
+                } else {
+                    completion(.Failure(SpotifyError.InvalidSession))
+                }
+            }
+        }
+    }
+
     // MARK: Request Helpers
 
-    func authenticatedSpotifyRequest(forURL urlString: String) -> NSMutableURLRequest? {
+    private func authenticatedSpotifyRequest(forURL urlString: String) -> NSMutableURLRequest? {
         if let session = self.session where session.isValid(),
             let token = session.accessToken,
             let url = NSURL(string: urlString) {
@@ -224,7 +249,7 @@ class Spotify {
         return nil
     }
 
-    func extractTracks(fromData data: NSData) -> Result<[SPTPartialTrack]> {
+    private func extractTracks(fromData data: NSData) -> Result<[SPTPartialTrack]> {
         do {
             if let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject],
                 let rawTracks = json["tracks"] as? [[String:AnyObject]] {
@@ -234,6 +259,24 @@ class Spotify {
                     tracks.append(track)
                 }
                 return .Success(tracks)
+            } else {
+                return .Failure(SpotifyError.RequestFailed)
+            }
+        } catch {
+            return .Failure(SpotifyError.RequestFailed)
+        }
+    }
+
+    private func createTrackAnalyses(fromData data: NSData) -> Result<[TrackAnalysis]> {
+        do {
+            if let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject],
+                let jsonAnalyses = json["audio_features"] as? [[String:AnyObject]] {
+                var analysesObjects = [TrackAnalysis]()
+                for jsonAnalysis in jsonAnalyses {
+                    let analysis = try TrackAnalysis(js: jsonAnalysis)
+                    analysesObjects.append(analysis)
+                }
+                return .Success(analysesObjects)
             } else {
                 return .Failure(SpotifyError.RequestFailed)
             }
