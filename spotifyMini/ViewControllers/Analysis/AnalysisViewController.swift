@@ -13,6 +13,7 @@ import Charts
 class AnalysisViewController : UIViewController {
 
     let spotify = Spotify.manager
+    var genre: String?
     var analysis: Analysis? {
         willSet {
             self.stopObservingAnalysisNotification()
@@ -26,23 +27,31 @@ class AnalysisViewController : UIViewController {
     @IBOutlet weak var valenceLineChart: LineChartView!
     @IBOutlet weak var energyLineChart: LineChartView!
 
+    // MARK: View Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        let genre = "pop"
-        self.spotify.fetchRecommendedTracks(forGenre: genre) { result in
-            if let error = result.error as? SpotifyError {
-                self.presentErrorAlert(error)
-            } else if let tracks = result.value {
-                self.analysis = Analysis(tracks: tracks, name: genre)
-            }
-        }
+        self.fetchRecommendedTracksAndSetUpCharts()
+    }
 
-        let charts = [self.keysPieChart, self.valenceLineChart, self.energyLineChart]
-        charts.forEach {
-            $0.descriptionText = ""
-            $0.noDataText = "Analyzing \(genre)..."
-            $0.animate(yAxisDuration: 2.0, easingOption: ChartEasingOption.EaseInBounce)
-            $0.layer.cornerRadius = 8
+    func fetchRecommendedTracksAndSetUpCharts() {
+        if let genre = self.genre {
+            self.title = genre.uppercaseString
+            self.spotify.fetchRecommendedTracks(forGenre: genre) { result in
+                if let error = result.error as? SpotifyError {
+                    self.presentErrorAlert(error)
+                } else if let tracks = result.value {
+                    self.analysis = Analysis(tracks: tracks, name: genre)
+                }
+            }
+
+            let charts = [self.keysPieChart, self.valenceLineChart, self.energyLineChart]
+            charts.forEach {
+                $0.descriptionText = ""
+                $0.noDataText = "Analyzing \(genre)..."
+                $0.animate(yAxisDuration: 2.0, easingOption: ChartEasingOption.EaseInBounce)
+                $0.layer.cornerRadius = 8
+            }
         }
     }
 
@@ -56,7 +65,7 @@ class AnalysisViewController : UIViewController {
 
     func setupPieChartForMostFrequentSongKeys() {
         if let analysis = self.analysis {
-            self.keysPieChart.data = self.pieChartDataForTop3Keys(analysis)
+            self.keysPieChart.data = self.pieChartDataForKeyFrequency(analysis)
             self.keysPieChart.centerText = "Analyzed Songs\nper Key"
             self.keysPieChart.legend.enabled = false
         }
@@ -75,8 +84,8 @@ class AnalysisViewController : UIViewController {
 
         if let averages = analysis.averageValenceByKey where averages.count == Analysis.keyTitles.count {
             for i in 0..<Analysis.keyTitles.count {
-                let avgLoudnessForThisKey = averages[i]
-                let dataEntry = ChartDataEntry(value: Double(avgLoudnessForThisKey), xIndex: i)
+                let avgValenceForThisKey = averages[i]
+                let dataEntry = ChartDataEntry(value: Double(avgValenceForThisKey), xIndex: i)
                 lineDataEntries.append(dataEntry)
             }
         }
@@ -94,14 +103,16 @@ class AnalysisViewController : UIViewController {
         return LineChartData(xVals: Analysis.keyTitles, dataSet: lineDataSet)
     }
 
-    func pieChartDataForTop3Keys(analysis: Analysis, colors: [NSUIColor]? = nil) -> PieChartData {
+    func pieChartDataForKeyFrequency(analysis: Analysis, colors: [NSUIColor]? = nil) -> PieChartData {
         var pieDataEntries = [ChartDataEntry]()
 
         if let keyValues = analysis.keyValues {
             for i in 0..<Analysis.keyTitles.count {
                 let countOfThisKey = keyValues.filter { $0 == i }.count
-                let dataEntry = ChartDataEntry(value: Double(countOfThisKey), xIndex: i)
-                pieDataEntries.append(dataEntry)
+                if countOfThisKey > 0 {
+                    let dataEntry = ChartDataEntry(value: Double(countOfThisKey), xIndex: pieDataEntries.count)
+                    pieDataEntries.append(dataEntry)
+                }
             }
         }
 
@@ -145,8 +156,8 @@ class AnalysisViewController : UIViewController {
                 self.presentErrorAlert(spotifyError)
             } else {
                 self.title = self.analysis?.name.uppercaseString
-                self.setupLineChartForAvgValenceByKey()
                 self.setupPieChartForMostFrequentSongKeys()
+                self.setupLineChartForAvgValenceByKey()
                 self.setupLineChartForEnergy()
             }
         }

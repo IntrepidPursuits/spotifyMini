@@ -31,12 +31,16 @@ class Analysis {
     var averageValenceByKey: [Float]? {
         if let analyses = self.trackAnalyses {
             var averageValences = [Float]()
-            for i in 0..<12 {
+            for i in 0..<Analysis.keyTitles.count {
                 let analysesForThisKey = analyses.filter { $0.key == i }
                 let valences = analysesForThisKey.map { $0.valence }
                 let totalValence = valences.reduce(0, combine:+)
-                let averageValence = totalValence / Float(valences.count)
-                averageValences.append(averageValence)
+                if valences.count > 0 {
+                    let averageValence = totalValence / Float(valences.count)
+                    averageValences.append(averageValence)
+                } else {
+                    averageValences.append(0.0)
+                }
             }
             return averageValences
         }
