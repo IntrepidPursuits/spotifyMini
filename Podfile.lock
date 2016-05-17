@@ -1,4 +1,7 @@
 PODS:
+  - Charts (2.2.4):
+    - Charts/Core (= 2.2.4)
+  - Charts/Core (2.2.4)
   - FontAwesomeKit (2.2.1):
     - FontAwesomeKit/Core (= 2.2.1)
     - FontAwesomeKit/FontAwesome (= 2.2.1)
@@ -32,6 +35,7 @@ PODS:
   - PureJsonSerializer (1.0.2)
 
 DEPENDENCIES:
+  - Charts
   - FontAwesomeKit (from `git@github.com:PrideChung/FontAwesomeKit.git`, branch `master`)
   - Genome
   - Intrepid
@@ -49,6 +53,7 @@ CHECKOUT OPTIONS:
     :git: git@github.com:PrideChung/FontAwesomeKit.git
 
 SPEC CHECKSUMS:
+  Charts: a9e735c83c6d376ade20f6612dcf0ba217394a49
   FontAwesomeKit: 3614979b3dbb0ec3f7fac1bd760b91f66c31db67
   Genome: ee22f71d87eefac0f622f77e75d1fef7f7fa12e7
   Intrepid: bb00953ec36cfb8920742dd346e377d950189016
@@ -57,6 +62,6 @@ SPEC CHECKSUMS:
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   PureJsonSerializer: 81d6bc0e21ed4b837193279aa3d29981f75f9057
 
-PODFILE CHECKSUM: a19d7ab1631aaae72e89d4e0cf093988341c0e9f
+PODFILE CHECKSUM: db8da44c42dd601e8b7a142ed3459c85ac0a591f
 
 COCOAPODS: 1.0.0

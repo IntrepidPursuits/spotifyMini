@@ -9,5 +9,6 @@ target 'spotifyMini' do
 	pod 'Kingfisher'
 	pod 'MBProgressHUD'
 	pod 'Genome'
+	pod 'Charts'
 end
 

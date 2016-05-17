@@ -167,13 +167,27 @@ class Spotify {
         let urlString = "\(SpotifyAPIBaseURL)recommendations?limit=100&market=US&seed_genres=\(genre)"
         if let request = self.authenticatedSpotifyRequest(forURL: urlString) {
             let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler: { data, response, error in
-                if error != nil {
-                    completion(.Failure(SpotifyError.RequestFailed))
-                } else if let data = data {
-                    completion(self.extractTracks(fromData: data))
+                let result: Result<[SPTPartialTrack]>
+                if let data = data {
+                    result = self.extractTracks(fromData: data)
+                } else {
+                    result = .Failure(SpotifyError.RequestFailed)
+                }
+                Qu.Main {
+                    completion(result)
                 }
             })
             task.resume()
+        }  else {
+            self.renewSession { wasRenewed in
+                if wasRenewed {
+                    self.fetchRecommendedTracks(forGenre: genre, completion: completion)
+                } else {
+                    Qu.Main {
+                        completion(.Failure(SpotifyError.InvalidSession))
+                    }
+                }
+            }
         }
     }
 
@@ -183,19 +197,14 @@ class Spotify {
         let urlString = "\(SpotifyAPIBaseURL)recommendations/available-genre-seeds"
         if let request = self.authenticatedSpotifyRequest(forURL: urlString) {
             let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler: { data, response, error in
-                if error != nil {
-                    completion(.Failure(SpotifyError.RequestFailed))
-                } else if let data = data {
-                    do {
-                        if let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject],
-                            let genres = json["genres"] as? [String] {
-                            completion(.Success(genres))
-                        } else {
-                            completion(.Failure(SpotifyError.RequestFailed))
-                        }
-                    } catch {
-                        completion(.Failure(SpotifyError.RequestFailed))
-                    }
+                let result: Result<[String]>
+                if let data = data {
+                    result = self.extractGenres(fromData: data)
+                } else {
+                    result = .Failure(SpotifyError.RequestFailed)
+                }
+                Qu.Main {
+                    completion(result)
                 }
             })
             task.resume()
@@ -204,7 +213,9 @@ class Spotify {
                 if wasRenewed {
                     self.fetchAvailableGenreSeeds(completion)
                 } else {
-                    completion(.Failure(SpotifyError.InvalidSession))
+                    Qu.Main {
+                        completion(.Failure(SpotifyError.InvalidSession))
+                    }
                 }
             }
         }
@@ -217,10 +228,14 @@ class Spotify {
         let urlString = "\(SpotifyAPIBaseURL)audio-features?ids=\(commaSeparatedIDs)"
         if let request = self.authenticatedSpotifyRequest(forURL: urlString) {
             let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler: { data, response, error in
-                if error != nil {
-                    completion(.Failure(SpotifyError.RequestFailed))
-                } else if let data = data {
-                    completion(self.createTrackAnalyses(fromData: data))
+                let result: Result<[TrackAnalysis]>
+                if let data = data {
+                    result = self.createTrackAnalyses(fromData: data)
+                } else {
+                    result = .Failure(SpotifyError.RequestFailed)
+                }
+                Qu.Main {
+                    completion(result)
                 }
             })
             task.resume()
@@ -229,7 +244,9 @@ class Spotify {
                 if wasRenewed {
                     self.fetchAnalysis(forTrackIDs: trackIDs, completion: completion)
                 } else {
-                    completion(.Failure(SpotifyError.InvalidSession))
+                    Qu.Main {
+                        completion(.Failure(SpotifyError.InvalidSession))
+                    }
                 }
             }
         }
@@ -259,6 +276,19 @@ class Spotify {
                     tracks.append(track)
                 }
                 return .Success(tracks)
+            } else {
+                return .Failure(SpotifyError.RequestFailed)
+            }
+        } catch {
+            return .Failure(SpotifyError.RequestFailed)
+        }
+    }
+
+    private func extractGenres(fromData data: NSData) -> Result<[String]> {
+        do {
+            if let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject],
+                let genres = json["genres"] as? [String] {
+                return .Success(genres)
             } else {
                 return .Failure(SpotifyError.RequestFailed)
             }

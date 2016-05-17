@@ -49,7 +49,7 @@ class Artist {
             self.fullArtist = result.value
             var userInfo: [String:AnyObject]?
             if let error = result.error as? SpotifyError {
-                userInfo?.updateValue(NSError(spotifyError: error), forKey: ArtistNotificationErrorUserInfoKey)
+                userInfo = [ArtistNotificationErrorUserInfoKey : NSError(spotifyError: error)]
             }
             NSNotificationCenter.defaultCenter().postNotificationName(ArtistFetchedFullInfoNotification, object: self, userInfo: userInfo)
         }
@@ -61,7 +61,7 @@ class Artist {
                 self.topTracks = result.value
                 var userInfo: [String:AnyObject]?
                 if let error = result.error as? SpotifyError {
-                    userInfo?.updateValue(NSError(spotifyError: error), forKey: ArtistNotificationErrorUserInfoKey)
+                    userInfo = [ArtistNotificationErrorUserInfoKey : NSError(spotifyError: error)]
                 }
                 NSNotificationCenter.defaultCenter().postNotificationName(ArtistFetchedTopTracksNotification, object: self, userInfo: userInfo)
             })
