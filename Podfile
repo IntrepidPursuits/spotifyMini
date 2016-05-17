@@ -8,5 +8,6 @@ target 'spotifyMini' do
 	pod 'FontAwesomeKit', :git => 'git@github.com:PrideChung/FontAwesomeKit.git', :branch => 'master'
 	pod 'Kingfisher'
 	pod 'MBProgressHUD'
+	pod 'Genome'
 end
 
