@@ -59,18 +59,12 @@ class Analysis {
     func fetchAnalyses() {
         let ids = self.tracks.map { $0.identifier } as [String]
         // TODO: fetch from local store
-        // how to persist each of the properties
         self.spotify.fetchAnalysis(forTrackIDs: ids) { result in
             if let analyses = result.value {
                 analyses.forEach { self.trackAnalyses.updateValue($0, forKey: $0.identifier) }
             }
             // TODO: save to local store
-            // TODO: notificationCenter extension
-            var userInfo: [String:AnyObject]?
-            if let error = result.error as? SpotifyError {
-                userInfo = [AnalysisNotificationErrorUserInfoKey : NSError(spotifyError: error)]
-            }
-            NSNotificationCenter.defaultCenter().postNotificationName(AnalysisFetchedTrackInfoNotification, object: self, userInfo: userInfo)
+            NSNotificationCenter.defaultCenter().postNotification(AnalysisFetchedTrackInfoNotification, object: self, optionalError: result.error)
         }
     }
 }

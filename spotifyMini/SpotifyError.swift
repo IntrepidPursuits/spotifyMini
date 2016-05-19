@@ -59,3 +59,13 @@ extension UIViewController {
         self.presentViewController(alert, animated: true, completion: nil)
     }
 }
+
+extension NSNotificationCenter {
+    func postNotification(name: String, object: AnyObject?, optionalError: ErrorType? = nil) {
+        var userInfo: [String:AnyObject]?
+        if let error = optionalError as? SpotifyError {
+            userInfo = [AnalysisNotificationErrorUserInfoKey : NSError(spotifyError: error)]
+        }
+        NSNotificationCenter.defaultCenter().postNotificationName(name, object: object, userInfo: userInfo)
+    }
+}

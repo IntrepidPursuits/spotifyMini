@@ -47,11 +47,7 @@ class Artist {
     func fetchFullInfo() {
         self.spotify.fetchFullArtist(forPartialArtist: self.partialArtist) { result in
             self.fullArtist = result.value
-            var userInfo: [String:AnyObject]?
-            if let error = result.error as? SpotifyError {
-                userInfo = [ArtistNotificationErrorUserInfoKey : NSError(spotifyError: error)]
-            }
-            NSNotificationCenter.defaultCenter().postNotificationName(ArtistFetchedFullInfoNotification, object: self, userInfo: userInfo)
+            NSNotificationCenter.defaultCenter().postNotification(ArtistFetchedFullInfoNotification, object: self, optionalError: result.error)
         }
     }
 
@@ -59,11 +55,7 @@ class Artist {
         if let fullArtist = self.fullArtist {
             self.spotify.fetchTopTracks(forArtist: fullArtist, completion: { result in
                 self.topTracks = result.value
-                var userInfo: [String:AnyObject]?
-                if let error = result.error as? SpotifyError {
-                    userInfo = [ArtistNotificationErrorUserInfoKey : NSError(spotifyError: error)]
-                }
-                NSNotificationCenter.defaultCenter().postNotificationName(ArtistFetchedTopTracksNotification, object: self, userInfo: userInfo)
+                NSNotificationCenter.defaultCenter().postNotification(ArtistFetchedTopTracksNotification, object: self, optionalError: result.error)
             })
         }
     }
