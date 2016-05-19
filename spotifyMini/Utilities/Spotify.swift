@@ -222,7 +222,7 @@ class Spotify {
 
     // MARK: Fetch Analysis For IDs
 
-    func fetchAnalysis(forTrackIDs trackIDs:[String], completion: (Result<[TrackAnalysis]>) -> Void) {
+    func fetchAnalysis(forTrackIDs trackIDs: [String], completion: (Result<[TrackAnalysis]>) -> Void) {
         let commaSeparatedIDs = trackIDs.joinWithSeparator(",")
         let urlString = "\(SpotifyAPIBaseURL)audio-features?ids=\(commaSeparatedIDs)"
         if let request = self.authenticatedSpotifyRequest(forURL: urlString) {

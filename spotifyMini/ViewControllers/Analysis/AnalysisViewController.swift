@@ -42,6 +42,7 @@ class AnalysisViewController : UIViewController {
                     self.presentErrorAlert(error)
                 } else if let tracks = result.value {
                     self.analysis = Analysis(tracks: tracks, name: genre)
+                    self.analysis?.fetchAnalyses()
                 }
             }
 

@@ -15,7 +15,7 @@ let AnalysisNotificationErrorUserInfoKey = "AnalysisUserInfoError"
 class Analysis {
     private let spotify = Spotify.manager
     private let tracks: [SPTPartialTrack]
-    private var trackAnalyses = [String : TrackAnalysis]()
+    private var trackAnalysesCache = [String : TrackAnalysis]()
     static let keyTitles = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
 
     // MARK: Public Properties
@@ -23,11 +23,11 @@ class Analysis {
     let name: String
 
     var keyValues: [Int] {
-        return self.trackAnalyses.values.map { $0.key }
+        return self.trackAnalysesCache.values.map { $0.key }
     }
 
     var averageValenceByKey: [Float] {
-        let analyses = self.trackAnalyses.values
+        let analyses = self.trackAnalysesCache.values
         var averageValences = [Float]()
         for i in 0..<Analysis.keyTitles.count {
             let analysesForThisKey = analyses.filter { $0.key == i }
@@ -44,7 +44,7 @@ class Analysis {
     }
 
     var energyValues: [Float] {
-        return self.trackAnalyses.values.map { $0.energy }
+        return self.trackAnalysesCache.values.map { $0.energy }.sort { $0 < $1 }
     }
 
     // MARK: Creation
@@ -52,7 +52,6 @@ class Analysis {
     init(tracks: [SPTPartialTrack], name: String) {
         self.name = name
         self.tracks = tracks
-        self.fetchAnalyses()
     }
 
     // MARK: Fetching
@@ -60,14 +59,14 @@ class Analysis {
     func fetchAnalyses() {
         let realm = try! Realm()
         var ids = self.tracks.map { $0.identifier } as [String]
-        let cachedObjects = realm.objects(TrackAnalysis).filter("identifier IN \(ids.realmPredicateFormattedString())")
-        cachedObjects.forEach { self.trackAnalyses.updateValue($0, forKey: $0.identifier) }
-        ids = ids.filter { !self.trackAnalyses.keys.contains($0) }
-
+        let cachedObjects = realm.objects(TrackAnalysis)
+        cachedObjects.forEach { self.trackAnalysesCache[$0.identifier] = $0 }
+        ids = ids.filter { !self.trackAnalysesCache.keys.contains($0) }
+        print("cached: \(cachedObjects.count), fetching: \(ids.count)")
         if ids.count > 0 {
             self.spotify.fetchAnalysis(forTrackIDs: ids) { result in
                 if let analyses = result.value {
-                    analyses.forEach { self.trackAnalyses.updateValue($0, forKey: $0.identifier) }
+                    analyses.forEach { self.trackAnalysesCache[$0.identifier] = $0 }
                     try! realm.write {
                         realm.add(analyses)
                     }
@@ -80,14 +79,12 @@ class Analysis {
             NSNotificationCenter.defaultCenter().postNotification(AnalysisFetchedTrackInfoNotification, object: self)
         }
     }
-}
 
-extension _ArrayType where Generator.Element == String {
-    func realmPredicateFormattedString() -> String {
-        var stringSelf = "\(self)"
-        stringSelf = stringSelf.stringByReplacingOccurrencesOfString("[", withString: "{")
-        stringSelf = stringSelf.stringByReplacingOccurrencesOfString("]", withString: "}")
-        stringSelf = stringSelf.stringByReplacingOccurrencesOfString("\"", withString: "'")
-        return stringSelf
+    // MARK: Helpers
+
+    private func realmPredicateFormattedString(forIds ids: [String]) -> String {
+        let singleQuoteWrappedIds = ids.map { "'\($0)'" }
+        let idsString = singleQuoteWrappedIds.joinWithSeparator(",")
+        return "{ \(idsString) }"
     }
 }
