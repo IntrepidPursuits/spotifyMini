@@ -7,23 +7,25 @@
 //
 
 import Foundation
+import Realm
+import RealmSwift
 import Genome
 
-struct TrackAnalysis : MappableObject {
+final class TrackAnalysis : RealmSwift.Object, MappableObject {
 
-    let identifier: String      // matches SPTPartialTrack
-    let duration: Double        // in milliseconds by default
+    dynamic var identifier: String = ""       // matches SPTPartialTrack
+    dynamic var duration: Double = 0.0        // in milliseconds by default
     
-    let acousticness: Float     // 0.0 - 1.0
-    let danceability: Float     // 0.0 - 1.0
-    let energy: Float           // 0.0 - 1.0
-    let loudness: Float         // overall loudness in dB, "typically -60 <-> 0.0"
-    let key: Int                // make an enum ? 0-12, 0 = C, 1 = C#/Db, etc
+    dynamic var acousticness: Float = 0.0     // 0.0 - 1.0
+    dynamic var danceability: Float = 0.0     // 0.0 - 1.0
+    dynamic var energy: Float = 0.0           // 0.0 - 1.0
+    dynamic var loudness: Float = 0.0         // overall loudness in dB, "typically -60 <-> 0.0"
+    dynamic var key: Int = 0                  // make an enum ? 0-12, 0 = C, 1 = C#/Db, etc
     
-    let tempo: Float            // in BPM
-    let valence: Float          // 0.0 - 1.0 "musical positiveness". maybe rename to positivity
+    dynamic var tempo: Float = 0.0            // in BPM
+    dynamic var valence: Float = 0.0          // 0.0 - 1.0 "musical positiveness". maybe rename to positivity
     
-    let mode: Int
+    dynamic var mode: Int  = 0
     var isMajor: Bool {
         return mode == 1
     }
@@ -32,13 +34,14 @@ struct TrackAnalysis : MappableObject {
     }
 
     // MARK: Questionably Useful
-    let instrumentalness: Float
-    let speechiness: Float
-    let liveness: Float
+    dynamic var instrumentalness: Float = 0.0
+    dynamic var speechiness: Float = 0.0
+    dynamic var liveness: Float = 0.0
 
     // MARK: Creation
     
-    init(map: Map) throws {
+    convenience init(map: Map) throws {
+        self.init()
         self.identifier = try map.extract("id")
         self.duration = try map.extract("duration_ms")
 
@@ -54,6 +57,20 @@ struct TrackAnalysis : MappableObject {
         self.instrumentalness = try map.extract("instrumentalness")
         self.speechiness = try map.extract("speechiness")
         self.liveness = try map.extract("liveness")
+    }
+
+    // MARK: Realm Required Initializers
+    
+    required init() {
+        super.init()
+    }
+    
+    required init(value: AnyObject, schema: RLMSchema) {
+        super.init(value: value, schema: schema)
+    }
+
+    required init(realm: RLMRealm, schema: RLMObjectSchema) {
+        super.init(realm: realm, schema: schema)
     }
 }
 

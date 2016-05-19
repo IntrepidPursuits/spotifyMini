@@ -33,6 +33,11 @@ PODS:
   - Kingfisher (2.4.1)
   - MBProgressHUD (0.9.2)
   - PureJsonSerializer (1.0.2)
+  - Realm (0.102.0):
+    - Realm/Headers (= 0.102.0)
+  - Realm/Headers (0.102.0)
+  - RealmSwift (0.102.0):
+    - Realm (= 0.102.0)
 
 DEPENDENCIES:
   - Charts
@@ -41,6 +46,7 @@ DEPENDENCIES:
   - Intrepid
   - Kingfisher
   - MBProgressHUD
+  - RealmSwift
 
 EXTERNAL SOURCES:
   FontAwesomeKit:
@@ -61,7 +67,9 @@ SPEC CHECKSUMS:
   Kingfisher: 41aed5b6c1ed8fa98cf6d75283ce89cf7890f517
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   PureJsonSerializer: 81d6bc0e21ed4b837193279aa3d29981f75f9057
+  Realm: 5d219f9037e3ec2019c599b8227bfc95433cb10e
+  RealmSwift: e6f436f9fea1c57b9ad6d1c46d57562c845f3c4c
 
-PODFILE CHECKSUM: db8da44c42dd601e8b7a142ed3459c85ac0a591f
+PODFILE CHECKSUM: 61dd0459a4fe1ad43f855939165694d6582d81eb
 
 COCOAPODS: 1.0.0

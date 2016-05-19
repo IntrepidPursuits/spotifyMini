@@ -10,5 +10,6 @@ target 'spotifyMini' do
 	pod 'MBProgressHUD'
 	pod 'Genome'
 	pod 'Charts'
+	pod 'RealmSwift'
 end
 

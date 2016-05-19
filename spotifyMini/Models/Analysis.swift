@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 let AnalysisFetchedTrackInfoNotification = "AnalysisFetchedTrackInfoNotification"
 let AnalysisNotificationErrorUserInfoKey = "AnalysisUserInfoError"
@@ -14,7 +15,7 @@ let AnalysisNotificationErrorUserInfoKey = "AnalysisUserInfoError"
 class Analysis {
     private let spotify = Spotify.manager
     private let tracks: [SPTPartialTrack]
-    private var trackAnalyses = [String: TrackAnalysis]()
+    private var trackAnalyses = [String : TrackAnalysis]()
     static let keyTitles = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
 
     // MARK: Public Properties
@@ -57,14 +58,36 @@ class Analysis {
     // MARK: Fetching
 
     func fetchAnalyses() {
-        let ids = self.tracks.map { $0.identifier } as [String]
-        // TODO: fetch from local store
-        self.spotify.fetchAnalysis(forTrackIDs: ids) { result in
-            if let analyses = result.value {
-                analyses.forEach { self.trackAnalyses.updateValue($0, forKey: $0.identifier) }
+        let realm = try! Realm()
+        var ids = self.tracks.map { $0.identifier } as [String]
+        let cachedObjects = realm.objects(TrackAnalysis).filter("identifier IN \(ids.realmPredicateFormattedString())")
+        cachedObjects.forEach { self.trackAnalyses.updateValue($0, forKey: $0.identifier) }
+        ids = ids.filter { !self.trackAnalyses.keys.contains($0) }
+
+        if ids.count > 0 {
+            self.spotify.fetchAnalysis(forTrackIDs: ids) { result in
+                if let analyses = result.value {
+                    analyses.forEach { self.trackAnalyses.updateValue($0, forKey: $0.identifier) }
+                    try! realm.write {
+                        realm.add(analyses)
+                    }
+                }
+                NSNotificationCenter.defaultCenter().postNotification(AnalysisFetchedTrackInfoNotification, object: self, optionalError: result.error)
             }
-            // TODO: save to local store
-            NSNotificationCenter.defaultCenter().postNotification(AnalysisFetchedTrackInfoNotification, object: self, optionalError: result.error)
         }
+
+        if cachedObjects.count > 0 {
+            NSNotificationCenter.defaultCenter().postNotification(AnalysisFetchedTrackInfoNotification, object: self)
+        }
+    }
+}
+
+extension _ArrayType where Generator.Element == String {
+    func realmPredicateFormattedString() -> String {
+        var stringSelf = "\(self)"
+        stringSelf = stringSelf.stringByReplacingOccurrencesOfString("[", withString: "{")
+        stringSelf = stringSelf.stringByReplacingOccurrencesOfString("]", withString: "}")
+        stringSelf = stringSelf.stringByReplacingOccurrencesOfString("\"", withString: "'")
+        return stringSelf
     }
 }
