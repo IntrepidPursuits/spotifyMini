@@ -13,7 +13,7 @@ import Charts
 class AnalysisViewController : UIViewController {
 
     let spotify = Spotify.manager
-    var genre: String?
+    var genre: Genre?
     var analysis: Analysis? {
         willSet {
             self.stopObservingAnalysisNotification()
@@ -36,12 +36,12 @@ class AnalysisViewController : UIViewController {
 
     func fetchRecommendedTracksAndSetUpCharts() {
         if let genre = self.genre {
-            self.title = genre.uppercaseString
-            self.spotify.fetchRecommendedTracks(forGenre: genre) { result in
+            self.title = genre.stringValue.uppercaseString
+            self.spotify.fetchRecommendedTracks(forGenre: genre.stringValue) { result in
                 if let error = result.error as? SpotifyError {
                     self.presentErrorAlert(error)
                 } else if let tracks = result.value {
-                    self.analysis = Analysis(tracks: tracks, name: genre)
+                    self.analysis = Analysis(tracks: tracks, genre: genre)
                     self.analysis?.fetchAnalyses()
                 }
             }
@@ -49,7 +49,7 @@ class AnalysisViewController : UIViewController {
             let charts = [self.keysPieChart, self.valenceLineChart, self.energyBarChart ]
             charts.forEach {
                 $0.descriptionText = ""
-                $0.noDataText = "Analyzing \(genre)..."
+                $0.noDataText = "Analyzing \(genre.stringValue)..."
                 $0.animate(yAxisDuration: 2.0, easingOption: ChartEasingOption.EaseInBounce)
                 $0.layer.cornerRadius = 8
             }
@@ -156,7 +156,7 @@ class AnalysisViewController : UIViewController {
                 let spotifyError = SpotifyError(error: error) {
                 self.presentErrorAlert(spotifyError)
             } else {
-                self.title = self.analysis?.name.uppercaseString
+                self.title = self.analysis?.genre.stringValue.uppercaseString
                 self.setupPieChartForMostFrequentSongKeys()
                 self.setupLineChartForAvgValenceByKey()
                 self.setupBarChartForEnergy()

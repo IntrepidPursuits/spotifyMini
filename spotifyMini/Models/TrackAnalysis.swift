@@ -33,6 +33,8 @@ final class TrackAnalysis : RealmSwift.Object, MappableObject {
         return mode == 0
     }
 
+    let genres = List<Genre>()
+
     // MARK: Questionably Useful
     dynamic var instrumentalness: Float = 0.0
     dynamic var speechiness: Float = 0.0

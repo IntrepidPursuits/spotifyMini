@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		94BAC76211553E5068AFA487 /* Pods_spotifyMini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1500CA6C361146D1E72F80A /* Pods_spotifyMini.framework */; };
 		B805520E1CE6198800E20F24 /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B805520D1CE6198800E20F24 /* AnalysisViewController.swift */; };
+		B80552171CEE4D2300E20F24 /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80552161CEE4D2300E20F24 /* Genre.swift */; };
 		B81F7F9C1CDA99E30092F13D /* ArtistSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81F7F9B1CDA99E30092F13D /* ArtistSearchTableViewController.swift */; };
 		B82462A41CE3C6AF009462F6 /* TrackAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82462A31CE3C6AF009462F6 /* TrackAnalysis.swift */; };
 		B84D372B1CDBB809006313C2 /* PopularTrackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84D372A1CDBB809006313C2 /* PopularTrackTableViewCell.swift */; };
@@ -33,6 +34,7 @@
 		4F361AC5DD7EB886FAB24B84 /* Pods-spotifyMini.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spotifyMini.release.xcconfig"; path = "Pods/Target Support Files/Pods-spotifyMini/Pods-spotifyMini.release.xcconfig"; sourceTree = "<group>"; };
 		57E3AF3B2F75B3AF547C2A49 /* Pods-spotifyMini.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spotifyMini.debug.xcconfig"; path = "Pods/Target Support Files/Pods-spotifyMini/Pods-spotifyMini.debug.xcconfig"; sourceTree = "<group>"; };
 		B805520D1CE6198800E20F24 /* AnalysisViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnalysisViewController.swift; path = ViewControllers/Analysis/AnalysisViewController.swift; sourceTree = "<group>"; };
+		B80552161CEE4D2300E20F24 /* Genre.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Genre.swift; path = Models/Genre.swift; sourceTree = "<group>"; };
 		B81F7F9B1CDA99E30092F13D /* ArtistSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistSearchTableViewController.swift; path = ViewControllers/Search/ArtistSearchTableViewController.swift; sourceTree = "<group>"; };
 		B82462A31CE3C6AF009462F6 /* TrackAnalysis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackAnalysis.swift; path = Models/TrackAnalysis.swift; sourceTree = "<group>"; };
 		B84D372A1CDBB809006313C2 /* PopularTrackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopularTrackTableViewCell.swift; path = ViewControllers/Artist/PopularTrackTableViewCell.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				B87193211CE21C1000D17885 /* Artist.swift */,
 				B82462A31CE3C6AF009462F6 /* TrackAnalysis.swift */,
 				E24CAE051CE5728700EDA744 /* Analysis.swift */,
+				B80552161CEE4D2300E20F24 /* Genre.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				B82462A41CE3C6AF009462F6 /* TrackAnalysis.swift in Sources */,
 				E25EF2F21CEB6F8700BF062F /* GenreSelectTableViewController.swift in Sources */,
 				B84D372B1CDBB809006313C2 /* PopularTrackTableViewCell.swift in Sources */,
+				B80552171CEE4D2300E20F24 /* Genre.swift in Sources */,
 				B8A7E0CB1CDA4AB300E10028 /* AppDelegate.swift in Sources */,
 				B8AC3ACB1CDB804400914FAE /* ArtistViewController.swift in Sources */,
 				B87193221CE21C1000D17885 /* Artist.swift in Sources */,

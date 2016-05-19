@@ -20,7 +20,7 @@ class Analysis {
 
     // MARK: Public Properties
 
-    let name: String
+    let genre: Genre
 
     var keyValues: [Int] {
         return self.trackAnalysesCache.values.map { $0.key }
@@ -49,8 +49,8 @@ class Analysis {
 
     // MARK: Creation
 
-    init(tracks: [SPTPartialTrack], name: String) {
-        self.name = name
+    init(tracks: [SPTPartialTrack], genre: Genre) {
+        self.genre = genre
         self.tracks = tracks
     }
 
@@ -59,14 +59,13 @@ class Analysis {
     func fetchAnalyses() {
         let realm = try! Realm()
         var ids = self.tracks.map { $0.identifier } as [String]
-        let cachedObjects = realm.objects(TrackAnalysis)
+        let cachedObjects = realm.objects(TrackAnalysis).filter("%@ IN genres", self.genre)
         cachedObjects.forEach { self.trackAnalysesCache[$0.identifier] = $0 }
         ids = ids.filter { !self.trackAnalysesCache.keys.contains($0) }
-        print("cached: \(cachedObjects.count), fetching: \(ids.count)")
         if ids.count > 0 {
             self.spotify.fetchAnalysis(forTrackIDs: ids) { result in
                 if let analyses = result.value {
-                    analyses.forEach { self.trackAnalysesCache[$0.identifier] = $0 }
+                    analyses.forEach { self.trackAnalysesCache[$0.identifier] = $0 ; $0.genres.append(self.genre) }
                     try! realm.write {
                         realm.add(analyses)
                     }

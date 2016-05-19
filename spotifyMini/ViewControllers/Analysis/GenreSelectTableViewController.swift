@@ -7,24 +7,26 @@
 //
 
 import Foundation
+import RealmSwift
 
 class GenreSelectTableViewController : UITableViewController {
 
-    var genres = [String]()
+    var genres = [Genre]()
     let spotify = Spotify.manager
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.populateTableViewWithGenres()
+        self.loadGenresFromRealm()
+        self.loadGenresFromSpotify()
     }
 
-    func populateTableViewWithGenres() {
+    // create any genre's that we dont already have
+    func loadGenresFromSpotify() {
         self.spotify.fetchAvailableGenreSeeds { result in
             if let error = result.error as? SpotifyError {
                 self.presentErrorAlert(error)
-            } else if let genres = result.value {
-                self.genres = genres
-                self.tableView.reloadData()
+            } else if let genreStrings = result.value {
+                self.updateRealmGenresIfNecessary(withGenreStrings: genreStrings)
             }
         }
     }
@@ -37,7 +39,7 @@ class GenreSelectTableViewController : UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.ip_dequeueCell(indexPath)
-        cell.textLabel?.text = self.genres[indexPath.row].capitalizedString
+        cell.textLabel?.text = self.genres[indexPath.row].stringValue.capitalizedString
         return cell
     }
 
@@ -47,6 +49,28 @@ class GenreSelectTableViewController : UITableViewController {
         if let ip = self.tableView.indexPathForSelectedRow,
             let analysisVC = segue.destinationViewController as? AnalysisViewController {
             analysisVC.genre = self.genres[ip.row]
+        }
+    }
+
+    // MARK: Realm
+
+    func loadGenresFromRealm() {
+        let realm = try! Realm()
+        self.genres = realm.objects(Genre).map { $0 }
+        self.tableView.reloadData()
+    }
+
+    func updateRealmGenresIfNecessary(withGenreStrings genreStrings: [String]) {
+        let realm = try! Realm()
+        let storedGenres = realm.objects(Genre)
+        genreStrings.forEach { string in
+            let matchingGenreObjects = storedGenres.filter { $0.stringValue == string }
+            if matchingGenreObjects.isEmpty {
+                try! realm.write {
+                    realm.add(Genre(string: string))
+                }
+                self.loadGenresFromRealm()
+            }
         }
     }
 }
