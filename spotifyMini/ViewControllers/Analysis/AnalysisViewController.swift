@@ -25,7 +25,7 @@ class AnalysisViewController : UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var keysPieChart: PieChartView!
     @IBOutlet weak var valenceLineChart: LineChartView!
-    @IBOutlet weak var energyLineChart: LineChartView!
+    @IBOutlet weak var energyBarChart: BarChartView!
 
     // MARK: View Life Cycle
 
@@ -46,7 +46,7 @@ class AnalysisViewController : UIViewController {
                 }
             }
 
-            let charts = [self.keysPieChart, self.valenceLineChart, self.energyLineChart]
+            let charts = [self.keysPieChart, self.valenceLineChart, self.energyBarChart ]
             charts.forEach {
                 $0.descriptionText = ""
                 $0.noDataText = "Analyzing \(genre)..."
@@ -72,9 +72,9 @@ class AnalysisViewController : UIViewController {
         }
     }
 
-    func setupLineChartForEnergy() {
+    func setupBarChartForEnergy() {
         if let analysis = self.analysis {
-            self.energyLineChart.data = self.lineDataForEnergy(analysis)
+            self.energyBarChart.data = self.barChartDataForEnergy(analysis)
         }
     }
 
@@ -126,25 +126,26 @@ class AnalysisViewController : UIViewController {
         return PieChartData(xVals: Analysis.keyTitles, dataSet: pieDataSet)
     }
 
-    func lineDataForEnergy(analysis: Analysis, colors: [NSUIColor]? = nil) -> LineChartData {
+    func barChartDataForEnergy(analysis: Analysis, colors: [NSUIColor]? = nil) -> BarChartData {
 
-        var lineDataEntries = [ChartDataEntry]()
+        var dataEntries = [BarChartDataEntry]()
 
+        let buckets = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] as [Float]
         let values = analysis.energyValues
-        for i in 0..<values.count {
-            let dataEntry = ChartDataEntry(value: Double(values[i]), xIndex: i)
-            lineDataEntries.append(dataEntry)
+        for (index, upperLimit) in buckets.enumerate() {
+            let lowerLimit = upperLimit - 0.1
+            let countOfValuesWithinLimits = values.filter { $0 < upperLimit && $0 > lowerLimit }.count
+
+            let dataEntry = BarChartDataEntry(value: Double(countOfValuesWithinLimits), xIndex: index)
+            dataEntries.append(dataEntry)
         }
 
-        let lineDataSet = LineChartDataSet(yVals: lineDataEntries, label: "Energy by Track")
-        lineDataSet.axisDependency = .Left
-        lineDataSet.colors = colors ?? ChartColorTemplates.joyful()
-        lineDataSet.setColor(UIColor.redColor())
-        var blankStrings = [String]()
-        while blankStrings.count < lineDataEntries.count {
-            blankStrings.append("")
-        }
-        return LineChartData(xVals: blankStrings, dataSet: lineDataSet)
+        let dataSet = BarChartDataSet(yVals: dataEntries, label: "# of Tracks per Energy Level (0.0 - 1.0)")
+        dataSet.axisDependency = .Left
+        dataSet.colors = colors ?? ChartColorTemplates.joyful()
+
+        let bucketTitles = buckets.map { String($0) }
+        return BarChartData(xVals: bucketTitles, dataSet: dataSet)
     }
 
     // MARK: Notification Handling
@@ -158,7 +159,7 @@ class AnalysisViewController : UIViewController {
                 self.title = self.analysis?.name.uppercaseString
                 self.setupPieChartForMostFrequentSongKeys()
                 self.setupLineChartForAvgValenceByKey()
-                self.setupLineChartForEnergy()
+                self.setupBarChartForEnergy()
             }
         }
     }

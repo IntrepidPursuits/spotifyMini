@@ -199,10 +199,10 @@
                                                     <constraint firstItem="8po-IE-zp4" firstAttribute="top" secondItem="oDc-8S-AG0" secondAttribute="top" constant="8" id="D8B-T2-BzG"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o0v-WD-4GY" userLabel="line container 2">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o0v-WD-4GY" userLabel="bar container">
                                                 <rect key="frame" x="0.0" y="600" width="600" height="300"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r8V-JB-uAd" customClass="LineChartView" customModule="Charts">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r8V-JB-uAd" customClass="BarChartView" customModule="Charts">
                                                         <rect key="frame" x="8" y="8" width="584" height="284"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </view>
@@ -238,7 +238,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Analysis" id="NZr-Ll-eQV"/>
                     <connections>
-                        <outlet property="energyLineChart" destination="r8V-JB-uAd" id="A3I-0C-ENW"/>
+                        <outlet property="energyBarChart" destination="r8V-JB-uAd" id="gvM-uZ-6au"/>
                         <outlet property="keysPieChart" destination="sNQ-He-4Dy" id="1lg-6A-2gg"/>
                         <outlet property="scrollView" destination="39e-9t-au5" id="2xb-46-yLk"/>
                         <outlet property="valenceLineChart" destination="8po-IE-zp4" id="pjj-ae-cID"/>
