@@ -48,7 +48,6 @@ class Spotify {
     func sessionFromUserDefaults() -> SPTSession? {
         if let sessionData = NSUserDefaults.standardUserDefaults().objectForKey(SpotifySessionUserDefaultsKey) as? NSData,
             let session = NSKeyedUnarchiver.unarchiveObjectWithData(sessionData) as? SPTSession {
-            print("we have a session already! it is... \(session.isValid() ? "VALID" : "INVALID")")
             return session
         }
         return nil

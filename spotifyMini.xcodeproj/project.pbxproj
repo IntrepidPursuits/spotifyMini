@@ -26,6 +26,7 @@
 		B8C1D2951CDCDA310093758D /* ArtistHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C1D2941CDCDA310093758D /* ArtistHeaderView.swift */; };
 		B8C1D2971CDCDA640093758D /* ArtistHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8C1D2961CDCDA640093758D /* ArtistHeaderView.xib */; };
 		E24CAE061CE5728700EDA744 /* Analysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24CAE051CE5728700EDA744 /* Analysis.swift */; };
+		E25EF2F21CEB6F8700BF062F /* GenreSelectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25EF2F11CEB6F8700BF062F /* GenreSelectTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		B8C1D2961CDCDA640093758D /* ArtistHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ArtistHeaderView.xib; path = ViewControllers/Artist/ArtistHeaderView.xib; sourceTree = "<group>"; };
 		E1500CA6C361146D1E72F80A /* Pods_spotifyMini.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spotifyMini.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E24CAE051CE5728700EDA744 /* Analysis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Analysis.swift; path = Models/Analysis.swift; sourceTree = "<group>"; };
+		E25EF2F11CEB6F8700BF062F /* GenreSelectTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenreSelectTableViewController.swift; path = ViewControllers/Analysis/GenreSelectTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 		B805520F1CE6198C00E20F24 /* Analysis */ = {
 			isa = PBXGroup;
 			children = (
+				E25EF2F11CEB6F8700BF062F /* GenreSelectTableViewController.swift */,
 				B805520D1CE6198800E20F24 /* AnalysisViewController.swift */,
 			);
 			name = Analysis;
@@ -327,6 +330,7 @@
 				B81F7F9C1CDA99E30092F13D /* ArtistSearchTableViewController.swift in Sources */,
 				E24CAE061CE5728700EDA744 /* Analysis.swift in Sources */,
 				B82462A41CE3C6AF009462F6 /* TrackAnalysis.swift in Sources */,
+				E25EF2F21CEB6F8700BF062F /* GenreSelectTableViewController.swift in Sources */,
 				B84D372B1CDBB809006313C2 /* PopularTrackTableViewCell.swift in Sources */,
 				B8A7E0CB1CDA4AB300E10028 /* AppDelegate.swift in Sources */,
 				B8AC3ACB1CDB804400914FAE /* ArtistViewController.swift in Sources */,
