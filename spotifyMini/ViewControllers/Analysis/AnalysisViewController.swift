@@ -82,7 +82,8 @@ class AnalysisViewController : UIViewController {
     func lineDataForAvgValenceByKey(analysis: Analysis, colors: [NSUIColor]? = nil) -> LineChartData {
         var lineDataEntries = [ChartDataEntry]()
 
-        if let averages = analysis.averageValenceByKey where averages.count == Analysis.keyTitles.count {
+        let averages = analysis.averageValenceByKey
+        if averages.count == Analysis.keyTitles.count {
             for i in 0..<Analysis.keyTitles.count {
                 let avgValenceForThisKey = averages[i]
                 let dataEntry = ChartDataEntry(value: Double(avgValenceForThisKey), xIndex: i)
@@ -106,13 +107,12 @@ class AnalysisViewController : UIViewController {
     func pieChartDataForKeyFrequency(analysis: Analysis, colors: [NSUIColor]? = nil) -> PieChartData {
         var pieDataEntries = [ChartDataEntry]()
 
-        if let keyValues = analysis.keyValues {
-            for i in 0..<Analysis.keyTitles.count {
-                let countOfThisKey = keyValues.filter { $0 == i }.count
-                if countOfThisKey > 0 {
-                    let dataEntry = ChartDataEntry(value: Double(countOfThisKey), xIndex: pieDataEntries.count)
-                    pieDataEntries.append(dataEntry)
-                }
+        let keyValues = analysis.keyValues
+        for i in 0..<Analysis.keyTitles.count {
+            let countOfThisKey = keyValues.filter { $0 == i }.count
+            if countOfThisKey > 0 {
+                let dataEntry = ChartDataEntry(value: Double(countOfThisKey), xIndex: pieDataEntries.count)
+                pieDataEntries.append(dataEntry)
             }
         }
 
@@ -129,11 +129,10 @@ class AnalysisViewController : UIViewController {
 
         var lineDataEntries = [ChartDataEntry]()
 
-        if let values = analysis.energyValues {
-            for i in 0..<values.count {
-                let dataEntry = ChartDataEntry(value: Double(values[i]), xIndex: i)
-                lineDataEntries.append(dataEntry)
-            }
+        let values = analysis.energyValues
+        for i in 0..<values.count {
+            let dataEntry = ChartDataEntry(value: Double(values[i]), xIndex: i)
+            lineDataEntries.append(dataEntry)
         }
 
         let lineDataSet = LineChartDataSet(yVals: lineDataEntries, label: "Energy by Track")
