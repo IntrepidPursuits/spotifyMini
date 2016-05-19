@@ -75,6 +75,8 @@ class AnalysisViewController : UIViewController {
     func setupBarChartForEnergy() {
         if let analysis = self.analysis {
             self.energyBarChart.data = self.barChartDataForEnergy(analysis)
+            self.energyBarChart.leftAxis.valueFormatter = NSNumberFormatter.formatterThatTrimsFloats()
+            self.energyBarChart.rightAxis.valueFormatter = NSNumberFormatter.formatterThatTrimsFloats()
         }
     }
 
@@ -97,10 +99,8 @@ class AnalysisViewController : UIViewController {
         lineDataSet.circleColors = colors ?? ChartColorTemplates.joyful()
         lineDataSet.setColor(UIColor.greenColor())
 
-        let formatter = NSNumberFormatter()
-        formatter.allowsFloats = false
-        formatter.numberStyle = .PercentStyle
-        lineDataSet.valueFormatter = formatter
+        lineDataSet.valueFormatter = NSNumberFormatter.formatterThatTrimsFloats()
+        lineDataSet.valueFormatter?.numberStyle = .PercentStyle
 
         return LineChartData(xVals: Analysis.keyTitles, dataSet: lineDataSet)
     }
@@ -120,9 +120,8 @@ class AnalysisViewController : UIViewController {
         let pieDataSet = PieChartDataSet(yVals: pieDataEntries, label: "")
         pieDataSet.axisDependency = .Left
         pieDataSet.colors = colors ?? ChartColorTemplates.pastel()
-        let formatter = NSNumberFormatter()
-        formatter.allowsFloats = false
-        pieDataSet.valueFormatter = formatter
+        pieDataSet.valueFormatter = NSNumberFormatter.formatterThatTrimsFloats()
+
         return PieChartData(xVals: Analysis.keyTitles, dataSet: pieDataSet)
     }
 
@@ -143,8 +142,9 @@ class AnalysisViewController : UIViewController {
         let dataSet = BarChartDataSet(yVals: dataEntries, label: "# of Tracks per Energy Level (0.0 - 1.0)")
         dataSet.axisDependency = .Left
         dataSet.colors = colors ?? ChartColorTemplates.joyful()
+        dataSet.valueFormatter = NSNumberFormatter.formatterThatTrimsFloats()
 
-        let bucketTitles = buckets.map { String($0) }
+        let bucketTitles = buckets.map { String(Int($0 * 10)) }
         return BarChartData(xVals: bucketTitles, dataSet: dataSet)
     }
 
@@ -166,5 +166,13 @@ class AnalysisViewController : UIViewController {
 
     func stopObservingAnalysisNotification() {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: AnalysisFetchedTrackInfoNotification, object: self.analysis)
+    }
+}
+
+extension NSNumberFormatter {
+    class func formatterThatTrimsFloats() -> NSNumberFormatter {
+        let formatter = NSNumberFormatter()
+        formatter.allowsFloats = false
+        return formatter
     }
 }
